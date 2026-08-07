@@ -114,7 +114,57 @@
         .dropdown-content a:hover { background: var(--light-gray); color: var(--gold); }
         .nav-actions { display: flex; align-items: center; gap: 20px; }
         .search-icon { color: var(--white); cursor: pointer; }
-        .hamburger { display: none; color: var(--white); font-size: 1.5rem; cursor: pointer; }
+        
+        /* Mobile Hamburger & Drawer Styles added */
+        .hamburger {
+            display: none; background: transparent; border: none;
+            color: var(--white); font-size: 1.8rem; cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            padding: 5px; z-index: 100001; 
+        }
+        .navbar.scrolled .hamburger { color: var(--white); }
+        .hamburger.open { transform: rotate(90deg); color: var(--white) !important; }
+        .hamburger.open i::before { content: "\f00d"; }
+
+        .mobile-drawer-overlay {
+            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6);
+            opacity: 0; visibility: hidden; z-index: 99998;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .mobile-drawer-overlay.open { opacity: 1; visibility: visible; }
+
+        .mobile-drawer {
+            position: fixed; top: 0; right: -100%; width: 100%; max-width: 380px; height: 100vh;
+            background: var(--navy); backdrop-filter: blur(15px);
+            z-index: 99999; box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
+            transition: right 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: flex; flex-direction: column; padding: 40px 30px;
+            overflow-y: auto;
+        }
+        .mobile-drawer.open { right: 0; }
+
+        .mobile-close {
+            align-self: flex-end; font-size: 2.2rem; color: var(--white);
+            background: none; border: none; cursor: pointer; 
+            transition: color 0.3s ease, transform 0.3s ease;
+            padding: 15px; margin-right: -15px; margin-top: -15px;
+            line-height: 1; display: inline-flex; align-items: center; justify-content: center;
+        }
+        .mobile-close:hover { color: var(--gold); transform: scale(1.1); }
+
+        .mobile-drawer-content { display: flex; flex-direction: column; flex: 1; margin-top: 20px; }
+        .mobile-logo img { max-height: 50px; margin-bottom: 40px; border-radius: 0; }
+
+        .mobile-nav-links { display: flex; flex-direction: column; gap: 25px; margin-bottom: auto; }
+        .mobile-nav-links a {
+            color: var(--white); font-size: 1.5rem; font-family: var(--font-primary);
+            font-weight: 500; transition: color 0.3s ease; text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .mobile-nav-links a:hover, .mobile-nav-links a.active { color: var(--gold); }
+        
+        .mobile-drawer-footer { margin-top: 40px; padding-top: 30px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+        .mobile-drawer-footer .btn { width: 100%; text-align: center; }
 
         /* ==========================================================================
            PRELOADER
@@ -146,14 +196,14 @@
             background: url('Contact us.png') center/cover no-repeat;
             z-index: 1; transform: scale(1.05);
         }
-       .hero-overlay{
-    position:absolute;
-    inset:0;
-    background: linear-gradient(
-        rgba(10,35,66,.35),
-        rgba(10,35,66,.45)
-    );
-}
+        .hero-overlay{
+            position:absolute;
+            inset:0;
+            background: linear-gradient(
+                rgba(10,35,66,.35),
+                rgba(10,35,66,.45)
+            );
+        }
         .particles-container { position: absolute; inset: 0; z-index: 3; overflow: hidden; pointer-events: none; }
         .particle {
             position: absolute; background: rgba(200, 155, 60, 0.3); border-radius: 50%;
@@ -197,7 +247,6 @@
         }
         .glass-card:hover .card-icon { background: var(--gold); color: var(--white); transform: scale(1.1); }
         
-        /* FIX FOR CALL ICON ROTATION */
         .card-icon .fa-phone,
         .card-icon .fa-phone-alt,
         .card-icon .fa-phone-volume {
@@ -347,7 +396,6 @@
         .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1.5fr; gap: 50px; margin-bottom: 60px; }
         .brand-col p { margin-top: 15px; line-height: 1.6; }
         
-        /* Updated Social Links CSS */
         .social-links { 
             display: flex; 
             align-items: center; 
@@ -391,7 +439,7 @@
         .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding: 25px 0; font-size: 0.9rem; }
 
         /* ==========================================================================
-           RESPONSIVE MEDIA QUERIES (A to Z devices fix)
+           RESPONSIVE MEDIA QUERIES
            ========================================================================== */
         @media (max-width: 1200px) {
             .contact-grid { gap: 30px; }
@@ -421,7 +469,7 @@
             .form-row { grid-template-columns: 1fr; gap: 15px; }
             .contact-area { padding: 50px 0; }
             .contact-form-wrapper { padding: 30px 20px; }
-            .company-info-card { padding: 40px 20px; transform: none !important; } /* disable 3d hover on mobile */
+            .company-info-card { padding: 40px 20px; transform: none !important; }
             .info-logo img { max-height: 40px; }
             .cta-section { padding: 80px 0; }
             .cta-content h2 { font-size: 2.2rem; }
@@ -446,8 +494,7 @@
     <div class="preloader">
         <div class="preloader-content">
             <img src="logo.png" alt="S.M.R. Engineering Logo" class="preloader-logo">
-                        <h2 class="preloader-text">CONTACT US</h2>
-
+            <h2 class="preloader-text">CONTACT US</h2>
             <h2 class="preloader-text">S.M.R. ENGINEERING PRIVATE LIMITED</h2>
             <div class="loading-bar-container">
                 <div class="loading-progress"></div>
@@ -462,27 +509,47 @@
     <!-- HEADER / NAVBAR -->
     <header class="navbar">
         <div class="container nav-container">
-            <a href="#" class="logo">
+            <a href="index.html" class="logo">
                 <img src="logo.png" alt="S.M.R. Engineering Logo">
             </a>
             <nav class="nav-links">
                 <a href="index.html">Home</a>
                 <a href="about.html">About</a>
-        
-                    <a href="services.html">Services </a>
-                   
-                
+                <a href="services.html">Services</a>
                 <a href="projects.html">Projects</a>
-            
                 <a href="contact.html" class="active">Contact</a>
             </nav>
             <div class="nav-actions">
                 <i class="fas fa-search search-icon"></i>
                 <a href="contact.html" class="btn btn-primary magnetic-btn">Get In Touch</a>
-                <div class="hamburger"><i class="fas fa-bars"></i></div>
+                <!-- HTML FIX: Hamburger as an accessible button -->
+                <button class="hamburger" aria-expanded="false" aria-controls="mobile-menu" aria-label="Toggle navigation menu">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
         </div>
     </header>
+
+    <!-- HTML FIX: MOBILE OFF-CANVAS MENU -->
+    <div class="mobile-drawer-overlay" aria-hidden="true"></div>
+    <div id="mobile-menu" class="mobile-drawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
+        <button class="mobile-close" aria-label="Close menu">✕</button>
+        <div class="mobile-drawer-content">
+            <a href="index.html" class="mobile-logo">
+                <img src="logo.png" alt="S.M.R. Engineering Logo">
+            </a>
+            <nav class="mobile-nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="services.html">Services</a>
+                <a href="projects.html">Projects</a>
+                <a href="contact.html" class="active">Contact</a>
+            </nav>
+            <div class="mobile-drawer-footer">
+                <a href="contact.html" class="btn btn-primary">Get In Touch</a>
+            </div>
+        </div>
+    </div>
 
     <!-- SECTION 1: PREMIUM HERO BANNER -->
     <section class="contact-hero">
@@ -492,7 +559,7 @@
         
         <div class="container hero-content">
             <div class="breadcrumb gs-reveal">
-                <a href="#">Home</a> <span>/</span> Contact
+                <a href="index.html">Home</a> <span>/</span> Contact
             </div>
             <h1 class="hero-title gs-reveal">Let's Start Your Next <br><span class="gold-text" style="font-size:inherit; letter-spacing:0; text-transform:none;">Engineering Project</span></h1>
         </div>
@@ -502,7 +569,6 @@
     <section class="quick-contact-section">
         <div class="container quick-grid">
             <div class="glass-card gs-fade-up">
-                <!-- Phone icon fixed with normal fa-phone and CSS rotation removal -->
                 <div class="card-icon"><i class="fa-solid fa-phone"></i></div>
                 <h3>Call Us</h3>
                 <p>+91 8114429075</p>
@@ -609,7 +675,6 @@
                             </div>
                         </div>
                         <div class="info-item">
-                            <!-- Fixed phone icon -->
                             <i class="fa-solid fa-phone"></i>
                             <div class="info-details">
                                 <h4>Phone</h4>
@@ -645,25 +710,24 @@
 
     <!-- SECTION 4: INTERACTIVE GOOGLE MAP -->
     <section class="map-section">
-    <div class="container">
-        <div class="section-heading text-center gs-fade-up">
-            <span class="gold-text">Location</span>
-            <h2>Find Our Office</h2>
+        <div class="container">
+            <div class="section-heading text-center gs-fade-up">
+                <span class="gold-text">Location</span>
+                <h2>Find Our Office</h2>
+            </div>
+            <div class="map-wrapper gs-fade-up">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2688.165332436211!2d73.18561877356647!3d22.23166254538308!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395fc5407d0acc71%3A0x384824b9d4df1ad5!2sYogi%20Florencia!5e1!3m2!1sen!2sin!4v1785945216040!5m2!1sen!2sin"
+                    width="100%"
+                    height="450"
+                    style="border:0; border-radius:16px;"
+                    allowfullscreen
+                    loading="lazy"
+                    referrerpolicy="strict-origin-when-cross-origin">
+                </iframe>
+            </div>
         </div>
-
-        <div class="map-wrapper gs-fade-up">
-            <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2688.165332436211!2d73.18561877356647!3d22.23166254538308!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395fc5407d0acc71%3A0x384824b9d4df1ad5!2sYogi%20Florencia!5e1!3m2!1sen!2sin!4v1785945216040!5m2!1sen!2sin"
-                width="100%"
-                height="450"
-                style="border:0; border-radius:16px;"
-                allowfullscreen
-                loading="lazy"
-                referrerpolicy="strict-origin-when-cross-origin">
-            </iframe>
-        </div>
-    </div>
-</section>
+    </section>
 
     <!-- SECTION 5: WHY CONTACT US -->
     <section class="why-contact">
@@ -704,7 +768,6 @@
             <h2>Ready To Build Something Great?</h2>
             <p>Let's discuss your next industrial engineering project. Our team is ready to deliver world-class solutions.</p>
             <div class="cta-actions">
-                <!-- Fixed phone icon -->
                 <a href="tel:+918114429075" class="btn btn-primary magnetic-btn"><i class="fa-solid fa-phone"></i> Call Now</a>
                 <a href="mailto:info@smrengineering.co" class="btn btn-outline-light magnetic-btn"><i class="fa-solid fa-envelope"></i> Send Email</a>
             </div>
@@ -717,7 +780,6 @@
             <i class="fa-brands fa-whatsapp"></i>
         </a>
         <a href="tel:+918114429075" class="fab fab-call" data-tooltip="Call Us">
-            <!-- Fixed phone icon -->
             <i class="fa-solid fa-phone"></i>
         </a>
         <button class="fab fab-top" id="backToTop" data-tooltip="Back To Top">
@@ -733,7 +795,6 @@
                     <img src="logo.png" alt="S.M.R. Engineering Logo">
                 </a>
                 <p style="margin-top: 15px;">S.M.R. Engineering Private Limited delivers world-class corporate infrastructure with a commitment to quality, safety, and sustainable engineering practices across India.</p>
-               
             </div>
             <div class="footer-col">
                 <h4>Quick Links</h4>
@@ -742,14 +803,13 @@
                     <li><a href="projects.html">Our Projects</a></li>
                     <li><a href="services.html">Our Services</a></li>
                     <li><a href="contact.html">Contact Us</a></li>
-                    <li><a href="faq.html ">FAQs</a></li>
+                    <li><a href="faq.html">FAQs</a></li>
                 </ul>
             </div>
             <div class="footer-col">
                 <h4>Contact Us</h4>
                 <ul class="contact-info">
                     <li><i class="fa-solid fa-map-marker-alt"></i> Shop No-214 Yogi Florencia Beside Voltamp Company, Jambuva, Maneja, Vadodara - 390013, Gujarat.</li>
-                    <!-- Fixed phone icon -->
                     <li><i class="fa-solid fa-phone"></i> +91 8114429075</li>
                     <li><i class="fa-solid fa-envelope"></i> info@smrengineering.co</li>
                     <li><i class="fa-solid fa-globe"></i> www.smrengineering.co</li>
@@ -805,7 +865,7 @@
                 cursor.style.left = e.clientX + 'px';
                 cursor.style.top = e.clientY + 'px';
             });
-            document.querySelectorAll('a, button, input, textarea, select, .magnetic-btn, .js-tilt, .checkbox-group label').forEach(el => {
+            document.querySelectorAll('a, button, input, textarea, select, .magnetic-btn, .js-tilt, .checkbox-group label, .hamburger').forEach(el => {
                 el.addEventListener('mouseenter', () => {
                     cursor.style.transform = 'translate(-50%, -50%) scale(2)';
                     cursor.style.background = 'rgba(200, 155, 60, 0.2)';
@@ -841,32 +901,104 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
 
-            // 5. Hero Floating Particles Generation
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = 20;
-            for(let i=0; i<particleCount; i++){
-                let p = document.createElement('div');
-                p.classList.add('particle');
-                let size = Math.random() * 8 + 4;
-                p.style.width = `${size}px`;
-                p.style.height = `${size}px`;
-                p.style.left = `${Math.random() * 100}%`;
-                p.style.top = `${Math.random() * 100}%`;
-                particlesContainer.appendChild(p);
+            // 5. JS FIX: MOBILE NAVIGATION LOGIC
+            const hamburgerBtn = document.querySelector('.hamburger');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileOverlay = document.querySelector('.mobile-drawer-overlay');
+            const mobileCloseBtn = document.querySelector('.mobile-close');
+            const mobileNavLinksContainer = document.querySelector('.mobile-nav-links');
+
+            let isMenuOpen = false;
+            let focusableElements = [];
+            let firstFocusableElement;
+            let lastFocusableElement;
+
+            function toggleBodyScroll(lock) {
+                if (lock) { document.body.style.overflow = 'hidden'; } 
+                else { document.body.style.overflow = ''; }
+            }
+
+            function openMenu() {
+                isMenuOpen = true;
+                mobileMenu.classList.add('open');
+                mobileOverlay.classList.add('open');
+                hamburgerBtn.classList.add('open');
+                hamburgerBtn.setAttribute('aria-expanded', 'true');
+                toggleBodyScroll(true);
                 
-                // Animate Particle
-                gsap.to(p, {
-                    y: `-${Math.random() * 150 + 50}`,
-                    x: `${(Math.random() - 0.5) * 100}`,
-                    opacity: 0,
-                    duration: Math.random() * 3 + 2,
-                    repeat: -1,
-                    ease: "none",
-                    delay: Math.random() * 2
+                focusableElements = mobileMenu.querySelectorAll('a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                if (focusableElements.length > 0) {
+                    firstFocusableElement = focusableElements[0];
+                    lastFocusableElement = focusableElements[focusableElements.length - 1];
+                    setTimeout(() => firstFocusableElement.focus(), 100);
+                }
+            }
+
+            function closeMenu() {
+                isMenuOpen = false;
+                mobileMenu.classList.remove('open');
+                mobileOverlay.classList.remove('open');
+                hamburgerBtn.classList.remove('open');
+                hamburgerBtn.setAttribute('aria-expanded', 'false');
+                toggleBodyScroll(false);
+            }
+
+            if(hamburgerBtn) {
+                hamburgerBtn.addEventListener('click', () => {
+                    if (isMenuOpen) closeMenu();
+                    else openMenu();
                 });
             }
 
-            // 6. Reveal Animations
+            if(mobileCloseBtn) mobileCloseBtn.addEventListener('click', closeMenu);
+            if(mobileOverlay) mobileOverlay.addEventListener('click', closeMenu);
+
+            if(mobileNavLinksContainer) {
+                mobileNavLinksContainer.addEventListener('click', (e) => {
+                    if (e.target.tagName === 'A') { closeMenu(); }
+                });
+            }
+
+            document.addEventListener('keydown', (e) => {
+                if (!isMenuOpen) return;
+                if (e.key === 'Escape') closeMenu();
+                if (e.key === 'Tab') {
+                    if (e.shiftKey) { 
+                        if (document.activeElement === firstFocusableElement) { lastFocusableElement.focus(); e.preventDefault(); }
+                    } else { 
+                        if (document.activeElement === lastFocusableElement) { firstFocusableElement.focus(); e.preventDefault(); }
+                    }
+                }
+            });
+
+            // 6. Hero Floating Particles Generation
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 20;
+            if(particlesContainer) {
+                for(let i=0; i<particleCount; i++){
+                    let p = document.createElement('div');
+                    p.classList.add('particle');
+                    let size = Math.random() * 8 + 4;
+                    p.style.width = `${size}px`;
+                    p.style.height = `${size}px`;
+                    p.style.left = `${Math.random() * 100}%`;
+                    p.style.top = `${Math.random() * 100}%`;
+                    particlesContainer.appendChild(p);
+                    
+                    // Animate Particle
+                    gsap.to(p, {
+                        y: `-${Math.random() * 150 + 50}`,
+                        x: `${(Math.random() - 0.5) * 100}`,
+                        opacity: 0,
+                        duration: Math.random() * 3 + 2,
+                        repeat: -1,
+                        ease: "none",
+                        delay: Math.random() * 2
+                    });
+                }
+            }
+
+            // 7. Reveal Animations
             const tlHero = gsap.timeline({ delay: 2.2 }); 
             tlHero.from(".gs-reveal", {
                 y: 50, opacity: 0, duration: 1, stagger: 0.15, ease: "power3.out"
@@ -880,16 +1012,21 @@
                 });
             });
 
-            gsap.from(".gs-fade-right", {
-                scrollTrigger: { trigger: ".contact-grid", start: "top 75%" },
-                x: -50, opacity: 0, duration: 1, ease: "power3.out"
+            gsap.utils.toArray('.gs-fade-right').forEach(element => {
+                gsap.from(element, {
+                    scrollTrigger: { trigger: element, start: "top 75%" },
+                    x: -50, opacity: 0, duration: 1, ease: "power3.out"
+                });
             });
-            gsap.from(".gs-fade-left", {
-                scrollTrigger: { trigger: ".contact-grid", start: "top 75%" },
-                x: 50, opacity: 0, duration: 1, ease: "power3.out", delay: 0.2
+            
+            gsap.utils.toArray('.gs-fade-left').forEach(element => {
+                gsap.from(element, {
+                    scrollTrigger: { trigger: element, start: "top 75%" },
+                    x: 50, opacity: 0, duration: 1, ease: "power3.out", delay: 0.2
+                });
             });
 
-            // 7. Magnetic Button Effect
+            // 8. Magnetic Button Effect
             document.querySelectorAll('.magnetic-btn').forEach(btn => {
                 btn.addEventListener('mousemove', (e) => {
                     const rect = btn.getBoundingClientRect();
@@ -902,10 +1039,9 @@
                 });
             });
 
-            // 8. 3D Card Hover Effect
+            // 9. 3D Card Hover Effect
             const tiltCard = document.querySelector('.js-tilt');
             if(tiltCard) {
-                // Disable 3D tilt effect if screen width is 768px or below (for mobile optimization)
                 const checkScreenSize = () => {
                     if (window.innerWidth <= 768) {
                         tiltCard.style.transform = 'none';
@@ -935,7 +1071,6 @@
                     });
                 });
                 
-                // Add resize listener to clear transforms when resizing to mobile
                 window.addEventListener('resize', () => {
                     if (window.innerWidth <= 768) {
                         gsap.set(tiltCard, { clearProps: "all" });
@@ -943,24 +1078,27 @@
                 });
             }
 
-            // Form Submit Mock
-            document.getElementById('contactForm').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const btn = e.target.querySelector('button');
-                const originalText = btn.innerHTML;
-                btn.innerHTML = 'Sending... <i class="fa-solid fa-spinner fa-spin"></i>';
-                setTimeout(() => {
-                    btn.innerHTML = 'Message Sent! <i class="fa-solid fa-check"></i>';
-                    btn.style.background = '#25D366';
-                    btn.style.borderColor = '#25D366';
-                    e.target.reset();
+            // 10. Form Submit Mock
+            const contactForm = document.getElementById('contactForm');
+            if(contactForm) {
+                contactForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const btn = e.target.querySelector('button');
+                    const originalText = btn.innerHTML;
+                    btn.innerHTML = 'Sending... <i class="fa-solid fa-spinner fa-spin"></i>';
                     setTimeout(() => {
-                        btn.innerHTML = originalText;
-                        btn.style.background = '';
-                        btn.style.borderColor = '';
-                    }, 3000);
-                }, 1500);
-            });
+                        btn.innerHTML = 'Message Sent! <i class="fa-solid fa-check"></i>';
+                        btn.style.background = '#25D366';
+                        btn.style.borderColor = '#25D366';
+                        e.target.reset();
+                        setTimeout(() => {
+                            btn.innerHTML = originalText;
+                            btn.style.background = '';
+                            btn.style.borderColor = '';
+                        }, 3000);
+                    }, 1500);
+                });
+            }
         });
     </script>
 </body>
