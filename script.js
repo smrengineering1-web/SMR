@@ -51,6 +51,100 @@ window.addEventListener('scroll', () => {
     }
 });
 
+// --- MOBILE NAVIGATION LOGIC ---
+const hamburger = document.querySelector('.hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+const mobileOverlay = document.querySelector('.mobile-drawer-overlay');
+const mobileCloseBtn = document.querySelector('.mobile-close');
+const desktopNavLinks = document.querySelector('.nav-links');
+const mobileNavLinksContainer = document.querySelector('.mobile-nav-links');
+
+// Task 3: Re-use links dynamically
+mobileNavLinksContainer.innerHTML = desktopNavLinks.innerHTML;
+
+let isMenuOpen = false;
+let focusableElements = [];
+let firstFocusableElement;
+let lastFocusableElement;
+
+// Helper function to lock/unlock body scroll
+function toggleBodyScroll(lock) {
+    if (lock) {
+        document.body.style.overflow = 'hidden';
+    } else {
+        document.body.style.overflow = '';
+    }
+}
+
+function openMenu() {
+    isMenuOpen = true;
+    mobileMenu.classList.add('open');
+    mobileOverlay.classList.add('open');
+    hamburger.classList.add('open');
+    hamburger.setAttribute('aria-expanded', 'true');
+    
+    toggleBodyScroll(true);
+    
+    // Accessibility: Focus trap setup
+    focusableElements = mobileMenu.querySelectorAll('a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    if (focusableElements.length > 0) {
+        firstFocusableElement = focusableElements[0];
+        lastFocusableElement = focusableElements[focusableElements.length - 1];
+        setTimeout(() => firstFocusableElement.focus(), 100); // slight delay to allow display
+    }
+}
+
+function closeMenu() {
+    isMenuOpen = false;
+    mobileMenu.classList.remove('open');
+    mobileOverlay.classList.remove('open');
+    hamburger.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    
+    toggleBodyScroll(false);
+    hamburger.focus();
+}
+
+// Event Listeners for menu toggling
+hamburger.addEventListener('click', () => {
+    if (isMenuOpen) closeMenu();
+    else openMenu();
+});
+
+mobileCloseBtn.addEventListener('click', closeMenu);
+mobileOverlay.addEventListener('click', closeMenu);
+
+// Close menu when clicking any link inside the mobile drawer
+mobileNavLinksContainer.addEventListener('click', (e) => {
+    if (e.target.tagName === 'A') {
+        closeMenu();
+    }
+});
+
+// ESC Key & Focus Trap Support
+document.addEventListener('keydown', (e) => {
+    if (!isMenuOpen) return;
+    
+    if (e.key === 'Escape') {
+        closeMenu();
+    }
+    
+    if (e.key === 'Tab') {
+        if (e.shiftKey) { // Shift + Tab
+            if (document.activeElement === firstFocusableElement) {
+                lastFocusableElement.focus();
+                e.preventDefault();
+            }
+        } else { // Tab
+            if (document.activeElement === lastFocusableElement) {
+                firstFocusableElement.focus();
+                e.preventDefault();
+            }
+        }
+    }
+});
+
+
 // GSAP Animations
 
 // Hero Load Sequence
@@ -119,13 +213,4 @@ counters.forEach(counter => {
         },
         once: true
     });
-});
-
-// Mobile Hamburger toggle (Basic setup)
-const hamburger = document.querySelector('.hamburger');
-const navLinks = document.querySelector('.nav-links');
-
-hamburger.addEventListener('click', () => {
-    // In a full implementation, this would trigger a mobile modal/drawer
-    alert("Mobile menu clicked - Implement offcanvas drawer here.");
 });
