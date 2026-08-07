@@ -193,9 +193,8 @@
     <div class="preloader">
         <div class="preloader-content">
             <img src="logo.png" alt="S.M.R. Engineering Logo" class="preloader-logo">
-                        <h2 class="preloader-text">WELCOME</h2>
-                         <h2 class="preloader-text">S.M.R. ENGINEERING PRIVATE LIMITED</h2>
-
+            <h2 class="preloader-text">WELCOME</h2>
+            <h2 class="preloader-text">S.M.R. ENGINEERING PRIVATE LIMITED</h2>
             <div class="loading-bar-container">
                 <div class="loading-progress"></div>
             </div>
@@ -215,20 +214,37 @@
             <nav class="nav-links">
                 <a href="index.html" class="active">Home</a>
                 <a href="about.html">About</a>
-               
-                    <a href="services.html">Services</a>
-                    
-                
+                <a href="services.html">Services</a>
                 <a href="projects.html">Projects</a>
                 <a href="contact.html">Contact</a>
             </nav>
             <div class="nav-actions">
                 <i class="fas fa-search search-icon"></i>
                 <a href="contact.html" class="btn btn-primary">Get In Touch</a>
-                <div class="hamburger"><i class="fas fa-bars"></i></div>
+                <!-- Updated Hamburger to button for accessibility -->
+                <button class="hamburger" aria-expanded="false" aria-controls="mobile-menu" aria-label="Toggle navigation menu">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
         </div>
     </header>
+
+    <!-- Mobile Off-Canvas Menu -->
+    <div class="mobile-drawer-overlay" aria-hidden="true"></div>
+    <div id="mobile-menu" class="mobile-drawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
+        <button class="mobile-close" aria-label="Close menu">✕</button>
+        <div class="mobile-drawer-content">
+            <a href="#" class="mobile-logo">
+                <img src="logo.png" alt="S.M.R. Engineering Logo">
+            </a>
+            <nav class="mobile-nav-links">
+                <!-- Links injected automatically via JS -->
+            </nav>
+            <div class="mobile-drawer-footer">
+                <a href="contact.html" class="btn btn-primary">Get In Touch</a>
+            </div>
+        </div>
+    </div>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
