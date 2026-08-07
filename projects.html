@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Projects | S.M.R. Engineering (I) Private Limited</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ==========================================================================
+           BASE VARIABLES & LUXURY RESETS
+           ========================================================================== */
+        :root {
+            --navy: #0A2342;
+            --navy-light: #15365B;
+            --gold: #D4AF37;
+            --gold-hover: #bda032;
+            --white: #ffffff;
+            --light-gray: #f8fafc;
+            --dark-gray: #334155;
+            --font-primary: 'Poppins', sans-serif;
+            --font-secondary: 'Inter', sans-serif;
+            --transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            --shadow-premium: 0 20px 40px rgba(10, 35, 66, 0.08);
+            --shadow-glass: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-secondary); background-color: var(--light-gray); color: var(--dark-gray); line-height: 1.7; overflow-x: hidden; }
+        h1, h2, h3, h4, h5, h6 { font-family: var(--font-primary); color: var(--navy); line-height: 1.2; }
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+        img { max-width: 100%; height: auto; display: block; }
+        
+        .container { width: 100%; max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+        
+        /* Universal Premium Padding */
+        .section-padding { padding: 100px 0; }
+        
+        .bg-navy { background-color: var(--navy); color: var(--white); }
+        .bg-white { background-color: var(--white); }
+        .bg-light { background-color: var(--light-gray); }
+
+        /* Typography Accents */
+        .gold-label { 
+            color: var(--gold); font-family: var(--font-primary); font-weight: 600; 
+            text-transform: uppercase; letter-spacing: 4px; font-size: 0.85rem; 
+            display: inline-flex; align-items: center; gap: 10px; margin-bottom: 20px; 
+        }
+        .gold-label::before { content: ''; display: block; width: 30px; height: 2px; background: var(--gold); }
+        .bg-navy .gold-label { color: var(--gold); }
+
+        /* Magnetic Premium Buttons */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+            padding: 18px 42px; border-radius: 6px; font-family: var(--font-primary);
+            font-weight: 600; cursor: pointer; border: 1px solid transparent; 
+            transition: background 0.4s, color 0.4s, box-shadow 0.4s, transform 0.4s;
+            position: relative; overflow: hidden; letter-spacing: 1px;
+        }
+        .btn-primary { background-color: var(--gold); color: var(--white); }
+        .btn-primary:hover { background-color: var(--navy); color: var(--white); box-shadow: 0 20px 40px rgba(10,35,66,0.2); }
+        .btn-outline-white { background-color: transparent; border-color: var(--white); color: var(--white); }
+        .btn-outline-white:hover { background-color: var(--white); color: var(--navy); }
+        .btn-outline-navy { background-color: transparent; border-color: var(--navy); color: var(--navy); }
+        .btn-outline-navy:hover { background-color: var(--navy); color: var(--white); box-shadow: var(--shadow-premium); }
+
+        /* ==========================================================================
+           HEADER & NAVIGATION (EXACTLY FROM INDEX.HTML)
+           ========================================================================== */
+        .navbar { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; padding: 20px 0; transition: var(--transition); background: transparent; }
+        .navbar.scrolled { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 15px 0; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        
+        /* LOGO FIX: Strictly Transparent, No White Box */
+        .logo { display: flex; align-items: center; background: transparent !important; padding: 0 !important; transition: var(--transition); }
+        .logo img { max-height: 90px; width: auto; object-fit: contain; transition: all 0.3s ease; }
+        .navbar.scrolled .logo img { max-height: 70px; } 
+        
+        .navbar:not(.scrolled) .nav-links a, .navbar:not(.scrolled) .nav-actions i { color: var(--white); }
+        .navbar.scrolled .nav-links a, .navbar.scrolled .nav-actions i { color: var(--navy); }
+        .nav-links { display: flex; gap: 30px; align-items: center; }
+        .nav-links a { font-family: var(--font-primary); font-weight: 500; font-size: 1rem; position: relative; }
+        .nav-links a::after { content: ''; position: absolute; left: 0; bottom: -5px; width: 0; height: 2px; background: var(--gold); transition: var(--transition); }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        .nav-actions { display: flex; align-items: center; gap: 20px; }
+        .search-icon { cursor: pointer; font-size: 1.2rem; }
+        .hamburger { display: none; font-size: 1.5rem; cursor: pointer; color: var(--white); }
+        .navbar.scrolled .hamburger { color: var(--navy); }
+
+        /* ==========================================================================
+           PRELOADER (EXACTLY FROM INDEX.HTML)
+           ========================================================================== */
+        .preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: var(--white); z-index: 999999; display: flex; justify-content: center; align-items: center; }
+        .preloader-content { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 15px; }
+        .preloader-logo { max-height: 120px; width: auto; opacity: 0; transform: translateY(20px); background: transparent !important; }
+        .preloader-text { font-family: var(--font-primary); color: var(--navy); font-size: 1.4rem; font-weight: 700; letter-spacing: 1px; opacity: 0; transform: translateY(20px); margin-top: 10px; }
+        .loading-bar-container { width: 250px; height: 4px; background: rgba(0, 0, 0, 0.1); border-radius: 4px; margin-top: 20px; overflow: hidden; opacity: 0; }
+        .loading-progress { width: 0%; height: 100%; background: var(--gold); }
+
+        /* ==========================================================================
+           SECTION 1: PREMIUM HERO BANNER (Height 95vh, 55% Overlay)
+           ========================================================================== */
+        .hero-premium {
+            position: relative; height: 95vh; min-height: 700px;
+            display: flex; align-items: center; justify-content: flex-start;
+            background: url('https://images.unsplash.com/photo-1581094288338-2314dddb7ece?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat fixed;
+        }
+        .hero-overlay {
+            position: absolute; inset: 0;
+            background: rgba(10,35,66,0.55); /* Requested 55% opacity */
+            z-index: 1;
+        }
+        .blueprint-bg {
+            position: absolute; inset: 0;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 60px 60px; z-index: 2; animation: panBg 40s linear infinite;
+        }
+        @keyframes panBg { 0% { background-position: 0 0; } 100% { background-position: 600px 600px; } }
+        #particles-js { position: absolute; inset: 0; z-index: 3; }
+        
+        .hero-content { position: relative; z-index: 4; max-width: 900px; padding-top: 80px; width: 100%; }
+        .breadcrumb { font-family: var(--font-secondary); font-size: 0.85rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 3px; display: block; font-weight: 500;}
+        .breadcrumb span { color: var(--gold); margin: 0 10px; }
+        .hero-content h1 { font-size: 5rem; color: var(--white); font-weight: 700; line-height: 1.1; margin-bottom: 25px; text-shadow: 0 4px 20px rgba(0,0,0,0.3);}
+        .hero-content p { font-size: 1.25rem; color: rgba(255,255,255,0.95); max-width: 750px; margin-bottom: 40px; font-weight: 400; text-shadow: 0 2px 10px rgba(0,0,0,0.3); line-height: 1.8;}
+        .hero-btns { display: flex; gap: 20px; }
+
+        .scroll-indicator { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 5; color: var(--white); text-align: center; animation: bounce 2s infinite; cursor: pointer; }
+        .scroll-indicator i { font-size: 2.2rem; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4));}
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); } 40% { transform: translateY(-20px) translateX(-50%); } 60% { transform: translateY(-10px) translateX(-50%); } }
+
+        /* ==========================================================================
+           SECTION 2: COMPANY STATS (Glass Cards overlapping Hero/Next section)
+           ========================================================================== */
+        .stats-wrapper { margin-top: -80px; position: relative; z-index: 10; padding: 0 20px;}
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .glass-stat-card {
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,1);
+            border-radius: 18px; padding: 40px 30px; text-align: center; color: var(--navy);
+            box-shadow: 0 15px 35px rgba(10,35,66,0.1); transition: var(--transition);
+        }
+        .glass-stat-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-premium); border-color: var(--gold); }
+        .gc-number { display: flex; align-items: baseline; justify-content: center; margin-bottom: 10px; }
+        .gc-number h3 { font-size: 4rem; color: var(--gold); margin: 0; line-height: 1; font-weight: 700; }
+        .gc-number span { font-size: 2.5rem; color: var(--gold); margin-left: 5px; }
+        .glass-stat-card p { font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; margin: 0; color: var(--dark-gray); font-weight: 600; }
+
+        /* ==========================================================================
+           SECTION 3: PROJECT FILTER
+           ========================================================================== */
+        .filter-section { padding-top: 100px; padding-bottom: 40px; text-align: center; }
+        .filter-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-top: 30px; }
+        .filter-btn {
+            background: var(--white); border: 1px solid rgba(10,35,66,0.1); padding: 12px 28px;
+            border-radius: 50px; font-family: var(--font-primary); font-weight: 500; font-size: 0.95rem;
+            color: var(--navy); cursor: pointer; transition: var(--transition); box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+        }
+        .filter-btn:hover, .filter-btn.active { background: var(--navy); color: var(--white); border-color: var(--navy); box-shadow: 0 10px 20px rgba(10,35,66,0.15); transform: translateY(-3px); }
+
+        /* ==========================================================================
+           SECTION 4: PROJECT GALLERY (Equal Height Cards)
+           ========================================================================== */
+        .gallery-section { padding-bottom: 100px; }
+        .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+        
+        .project-card {
+            background: var(--white); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04); transition: var(--transition); border: 1px solid rgba(0,0,0,0.03);
+            position: relative;
+        }
+        .project-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-premium); border-color: rgba(212,175,55,0.3); }
+        
+        .pc-image { height: 260px; overflow: hidden; position: relative; }
+        .pc-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
+        .project-card:hover .pc-image img { transform: scale(1.1); }
+        .pc-image::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,35,66,0.5), transparent); opacity: 0; transition: var(--transition); }
+        .project-card:hover .pc-image::after { opacity: 1; }
+
+        .pc-status { position: absolute; top: 20px; left: 20px; background: var(--gold); color: var(--white); padding: 6px 15px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; z-index: 2; letter-spacing: 1px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);}
+        
+        .pc-content { padding: 35px 30px; display: flex; flex-direction: column; flex-grow: 1; position: relative; }
+        .pc-cat { color: var(--gold); font-size: 0.85rem; font-weight: 700; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 1px; }
+        .pc-content h3 { font-size: 1.5rem; margin-bottom: 20px; transition: color 0.3s; }
+        .project-card:hover .pc-content h3 { color: var(--gold); }
+        
+        .pc-details { margin-bottom: 25px; flex-grow: 1; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 20px;}
+        .pc-details p { font-size: 0.95rem; margin-bottom: 8px; color: var(--dark-gray); display: flex; align-items: flex-start; gap: 10px; }
+        .pc-details p i { color: var(--navy); margin-top: 5px; width: 15px; }
+        .pc-details strong { color: var(--navy); font-weight: 600; min-width: 80px; display: inline-block;}
+        
+        .pc-arrow { align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; color: var(--navy); font-weight: 600; font-family: var(--font-primary); font-size: 1rem; transition: var(--transition); }
+        .pc-arrow i { width: 35px; height: 35px; border-radius: 50%; border: 1px solid rgba(10,35,66,0.2); display: flex; align-items: center; justify-content: center; transition: var(--transition); }
+        .project-card:hover .pc-arrow { color: var(--gold); }
+        .project-card:hover .pc-arrow i { background: var(--gold); color: var(--white); border-color: var(--gold); transform: translateX(5px); }
+
+        /* ==========================================================================
+           SECTION 5: FEATURED PROJECT (70/30 Split Layout)
+           ========================================================================== */
+        .featured-section { background: var(--navy); position: relative; overflow: hidden; }
+        .featured-section .blueprint-bg { opacity: 0.1; }
+        .featured-wrapper { display: flex; align-items: stretch; border-radius: 24px; overflow: hidden; background: var(--white); box-shadow: var(--shadow-premium); position: relative; z-index: 2;}
+        
+        .feat-img { width: 70%; position: relative; overflow: hidden; min-height: 600px; }
+        .feat-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s ease; }
+        .featured-wrapper:hover .feat-img img { transform: scale(1.05); }
+        .feat-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(0,0,0,0.3)); }
+        
+        .feat-content { width: 30%; padding: 60px 50px; display: flex; flex-direction: column; justify-content: center; background: var(--white); }
+        .feat-content .gold-label { margin-bottom: 15px; }
+        .feat-content h2 { font-size: 2.2rem; margin-bottom: 25px; line-height: 1.2; }
+        .feat-list { margin-bottom: 35px; }
+        .feat-list li { display: flex; align-items: center; gap: 12px; margin-bottom: 15px; font-size: 1.05rem; font-weight: 500; color: var(--dark-gray); border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 10px;}
+        .feat-list li i { color: var(--gold); font-size: 1.2rem; }
+        .feat-btns { display: flex; flex-direction: column; gap: 15px; margin-top: auto; }
+
+        /* ==========================================================================
+           SECTION 6: INDUSTRIES WE SERVE
+           ========================================================================== */
+        .ind-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-top: 50px; }
+        .ind-item {
+            position: relative; height: 380px; border-radius: 18px; overflow: hidden;
+            box-shadow: var(--shadow-glass); cursor: pointer;
+        }
+        .ind-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
+        .ind-item:hover img { transform: scale(1.15); }
+        .ind-overlay {
+            position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,35,66,0.9) 0%, rgba(10,35,66,0.2) 100%);
+            display: flex; flex-direction: column; justify-content: flex-end; padding: 40px 30px;
+            transition: var(--transition);
+        }
+        .ind-item:hover .ind-overlay { background: rgba(10,35,66,0.6); }
+        .ind-overlay h3 { color: var(--white); font-size: 1.6rem; margin: 0; transition: var(--transition); }
+        .ind-item:hover .ind-overlay h3 { color: var(--gold); transform: translateY(-10px); }
+
+        /* ==========================================================================
+           SECTION 7: ENGINEERING PROCESS (Horizontal Timeline)
+           ========================================================================== */
+        .process-wrapper { position: relative; margin-top: 80px; padding: 0 20px; }
+        .process-bg-line { position: absolute; top: 60px; left: 0; width: 100%; height: 3px; background: rgba(10,35,66,0.1); z-index: 1; }
+        .process-gold-line { position: absolute; top: 60px; left: 0; width: 0%; height: 3px; background: var(--gold); z-index: 2; box-shadow: 0 0 15px rgba(212,175,55,0.5); transition: width 1.5s ease-out; }
+        .process-steps { display: flex; justify-content: space-between; position: relative; z-index: 3; }
+        .p-step { text-align: center; width: 12%; }
+        .p-dot {
+            width: 120px; height: 120px; background: var(--white); border: 2px solid rgba(10,35,66,0.1);
+            border-radius: 50%; margin: 0 auto 25px; display: flex; align-items: center; justify-content: center;
+            font-size: 2.5rem; color: var(--navy); transition: var(--transition); box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+        .p-step:hover .p-dot, .p-step.active .p-dot { border-color: var(--gold); color: var(--gold); background: var(--navy); box-shadow: 0 0 30px rgba(212,175,55,0.3); transform: scale(1.1); }
+        .p-step h4 { color: var(--navy); font-size: 1.15rem; margin: 0; font-weight: 600; transition: var(--transition); }
+
+        /* ==========================================================================
+           SECTION 8: COMPANY JOURNEY (Modern Vertical Timeline)
+           ========================================================================== */
+        .journey-timeline { position: relative; max-width: 1100px; margin: 60px auto 0; padding: 20px 0; }
+        .journey-timeline::before {
+            content: ''; position: absolute; top: 0; left: 50%; width: 4px; height: 100%;
+            background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+            transform: translateX(-50%); opacity: 0.5;
+        }
+        .j-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; width: 100%; position: relative; z-index: 2; }
+        .j-item:nth-child(even) { flex-direction: row-reverse; }
+        .j-content {
+            width: 46%; background: var(--white); padding: 40px; border-radius: 18px;
+            box-shadow: var(--shadow-premium); border-bottom: 4px solid var(--gold); transition: var(--transition);
+        }
+        .j-content:hover { transform: translateY(-5px); box-shadow: 0 30px 60px rgba(10,35,66,0.12); }
+        .j-dot {
+            width: 24px; height: 24px; background: var(--gold); border-radius: 50%;
+            position: absolute; left: 50%; transform: translateX(-50%);
+            box-shadow: 0 0 0 8px rgba(248,250,252,1), 0 0 20px rgba(212,175,55,0.6); z-index: 3;
+        }
+        .j-year { font-family: var(--font-primary); font-size: 3rem; font-weight: 800; color: rgba(10,35,66,0.05); position: absolute; top: 10px; right: 20px; pointer-events: none; }
+        .j-content h4 { font-size: 1.5rem; margin-bottom: 10px; position: relative; z-index: 2; color: var(--navy); }
+        .j-content p { color: var(--dark-gray); margin: 0; font-size: 1.1rem; position: relative; z-index: 2; }
+
+        /* ==========================================================================
+           SECTION 9: WHY CLIENTS TRUST SMR (4-Column Grid)
+           ========================================================================== */
+        .why-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-top: 60px; }
+        .why-card {
+            background: var(--white); border: 1px solid rgba(0,0,0,0.03); padding: 50px 30px;
+            border-radius: 18px; text-align: center; transition: var(--transition); position: relative; overflow: hidden;
+            box-shadow: var(--shadow-premium);
+        }
+        .why-card::before { content: ''; position: absolute; top:0; left:0; width:100%; height:5px; background: var(--gold); transform: scaleX(0); transition: var(--transition); transform-origin: left; }
+        .why-card:hover { transform: translateY(-10px); box-shadow: 0 20px 50px rgba(10,35,66,0.1); }
+        .why-card:hover::before { transform: scaleX(1); }
+        .why-card i { font-size: 3.5rem; color: var(--navy); margin-bottom: 25px; transition: 0.3s; }
+        .why-card:hover i { color: var(--gold); transform: scale(1.1); text-shadow: 0 0 15px rgba(212,175,55,0.3); }
+        .why-card h4 { font-size: 1.2rem; margin: 0; color: var(--navy); }
+
+        /* ==========================================================================
+           SECTION 10: MAJOR CLIENTS (Auto-Scrolling Slider)
+           ========================================================================== */
+        .clients-section { overflow: hidden; border-top: 1px solid rgba(0,0,0,0.05); border-bottom: 1px solid rgba(0,0,0,0.05); padding: 80px 0; background: var(--white); }
+        .clients-track { display: flex; width: calc(300px * 16); animation: scrollLogos 40s linear infinite; }
+        .clients-track:hover { animation-play-state: paused; }
+        .client-logo { width: 300px; padding: 0 40px; display: flex; justify-content: center; align-items: center; }
+        .client-logo h3 { font-family: var(--font-primary); color: var(--navy); opacity: 0.3; transition: var(--transition); font-size: 1.6rem; white-space: nowrap; font-weight: 700; cursor: pointer; filter: grayscale(100%); }
+        .client-logo:hover h3 { opacity: 1; color: var(--gold); transform: scale(1.1); filter: grayscale(0%); }
+        @keyframes scrollLogos { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-300px * 8)); } }
+
+        /* ==========================================================================
+           SECTION 11: QUALITY ASSURANCE
+           ========================================================================== */
+        .quality-section { position: relative; overflow: hidden; }
+        .quality-section .blueprint-bg { opacity: 0.05; }
+        .quality-container { display: flex; align-items: center; gap: 80px; position: relative; z-index: 2; }
+        .quality-left { flex: 1; }
+        .quality-left h2 { color: var(--white); font-size: 3.5rem; margin-bottom: 30px; letter-spacing: -1px; }
+        .q-list { display: grid; grid-template-columns: 1fr; gap: 20px; }
+        .q-list li { display: flex; align-items: center; gap: 20px; color: var(--white); font-weight: 500; font-size: 1.2rem; background: rgba(255,255,255,0.03); padding: 20px 30px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); transition: var(--transition); }
+        .q-list li:hover { background: rgba(255,255,255,0.08); border-color: var(--gold); transform: translateX(10px); }
+        .q-list li i { color: var(--gold); font-size: 1.5rem; width: 30px; text-align: center;}
+        .quality-right { flex: 1; }
+        .quality-right img { width: 100%; border-radius: 18px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); height: 600px; object-fit: cover; }
+
+        /* ==========================================================================
+           SECTION 12: CTA SECTION
+           ========================================================================== */
+        .cta-section { position: relative; padding: 200px 0; text-align: center; overflow: hidden; background: url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1920&q=80') center/cover fixed; }
+        .cta-section::before { content: ''; position: absolute; inset: 0; background: rgba(10,35,66,0.9); z-index: 1; }
+        .cta-content { position: relative; z-index: 5; max-width: 1000px; margin: 0 auto; }
+        .cta-content h2 { font-size: 5rem; color: var(--white); margin-bottom: 30px; letter-spacing: -1px; line-height: 1.1; }
+        .cta-content p { font-size: 1.3rem; color: rgba(255,255,255,0.9); margin-bottom: 50px; }
+        .cta-btns { display: flex; justify-content: center; gap: 25px; }
+
+        /* ==========================================================================
+           FOOTER (EXACTLY FROM INDEX.HTML)
+           ========================================================================== */
+        .footer { background-color: var(--navy); color: var(--white); padding: 80px 0 0; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1.5fr; gap: 50px; margin-bottom: 50px; }
+        
+        /* LOGO FIX IN FOOTER */
+        .footer-logo-wrapper { background: transparent !important; padding: 0 !important; display: inline-block; }
+        .footer-logo-wrapper img { max-height: 70px; }
+
+        .brand-col p { color: rgba(255,255,255,0.7); margin-top: 15px; font-size: 0.95rem; }
+        .social-links { display: flex; gap: 15px; margin-top: 25px; }
+        .social-links a { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; justify-content: center; align-items: center; color: var(--white); transition: var(--transition); }
+        .social-links a:hover { background: var(--gold); box-shadow: 0 0 15px rgba(212,175,55,0.5); transform: translateY(-3px); }
+        .footer-col h4 { color: var(--white); font-size: 1.2rem; margin-bottom: 25px; position: relative; padding-bottom: 10px; }
+        .footer-col h4::after { content: ''; position: absolute; left: 0; bottom: 0; width: 40px; height: 2px; background: var(--gold); }
+        .footer-col ul li { margin-bottom: 12px; }
+        .footer-col ul li a { color: rgba(255,255,255,0.7); font-size: 0.95rem; }
+        .footer-col ul li a:hover { color: var(--gold); padding-left: 5px; }
+        .contact-info li { display: flex; gap: 15px; color: rgba(255,255,255,0.7); margin-bottom: 20px; line-height: 1.5; font-size: 0.95rem; }
+        .contact-info li i { color: var(--gold); font-size: 1.2rem; margin-top: 3px; }
+        .footer-bottom { background: #061528; padding: 25px 0; font-size: 0.9rem; color: rgba(255,255,255,0.6); }
+        .footer-bottom strong { color: var(--white); }
+
+        /* ==========================================================================
+           UTILITIES & RESPONSIVE
+           ========================================================================== */
+        .cursor { width: 20px; height: 20px; border: 2px solid var(--gold); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s; mix-blend-mode: difference; }
+        .scroll-progress { position: fixed; top: 0; left: 0; width: 0%; height: 4px; background: var(--gold); z-index: 99999; }
+
+        @media (max-width: 1200px) {
+            .projects-grid, .ind-grid { grid-template-columns: repeat(2, 1fr); }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .featured-wrapper { flex-direction: column; }
+            .feat-img { width: 100%; min-height: 400px; }
+            .feat-content { width: 100%; }
+            .process-wrapper { overflow-x: auto; padding-bottom: 40px; }
+            .process-steps, .process-bg-line, .process-gold-line { min-width: 1000px; }
+            .quality-container { flex-direction: column; }
+            .why-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 3.5rem; }
+            .projects-grid, .ind-grid, .stats-grid, .why-grid { grid-template-columns: 1fr; }
+            .cta-content h2 { font-size: 3.2rem; }
+            .cta-btns { flex-direction: column; }
+            .journey-timeline::before { left: 30px; }
+            .j-item, .j-item:nth-child(even) { flex-direction: row; justify-content: flex-end; padding-left: 60px; margin-bottom: 40px; }
+            .j-content { width: 100%; }
+            .j-dot { left: 30px; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .nav-links, .nav-actions .btn { display: none; }
+            .hamburger { display: block; }
+        }
+    </style>
+</head>
+<body>
+    <!-- PRELOADER (EXACTLY FROM INDEX.HTML) -->
+    <div class="preloader">
+        <div class="preloader-content">
+            <!-- LOGO FIX: Transparent background -->
+            <img src="logo.png" alt="S.M.R. Engineering Logo" class="preloader-logo">
+            <h2 class="preloader-text">PROJECTS</h2>
+             <h2 class="preloader-text">S.M.R. ENGINEERING PRIVATE LIMITED</h2>
+            <div class="loading-bar-container">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Cursor & Scroll Progress -->
+    <div class="cursor"></div>
+    <div class="scroll-progress"></div>
+
+    <!-- HEADER / NAVIGATION (EXACTLY FROM INDEX.HTML) -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <!-- LOGO FIX: Transparent background -->
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="S.M.R. Engineering Logo">
+            </a>
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <div class="dropdown">
+                    <a href="services.html">Services</a>
+                </div>
+                <a href="projects.html" class="active">Projects</a>
+                
+                <a href="contact.html">Contact</a>
+            </nav>
+            <div class="nav-actions">
+                <i class="fas fa-search search-icon"></i>
+                <a href="contact.html" class="btn btn-primary magnetic-btn">Get In Touch</a>
+                <div class="hamburger"><i class="fas fa-bars"></i></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 1. PREMIUM HERO BANNER -->
+    <section class="hero-premium">
+        <div id="particles-js"></div>
+        <div class="blueprint-bg"></div>
+        <div class="hero-overlay"></div>
+        
+        <div class="container hero-content gs-fade-up">
+            <span class="breadcrumb">Home <span>&gt;</span> Projects</span>
+            <h1>Engineering Excellence<br><strong>Across India.</strong></h1>
+            <p>Explore our portfolio of world-class heavy fabrication, manufacturing, erection, and commissioning projects delivered for India's leading industrial sectors.</p>
+            <div class="hero-btns">
+                <a href="#projects" class="btn btn-primary magnetic-btn">Explore Projects</a>
+                <a href="contact.html" class="btn btn-outline-white magnetic-btn">Request Quote</a>
+            </div>
+        </div>
+        
+        <div class="scroll-indicator" onclick="document.getElementById('stats').scrollIntoView({behavior: 'smooth'})">
+            <i class="fas fa-angle-double-down"></i>
+        </div>
+    </section>
+
+    
+
+    <!-- 3. PROJECT FILTER -->
+    <section id="projects" class="filter-section">
+        <div class="container">
+            <div class="text-center gs-fade-up">
+                <span class="gold-label">Our Capabilities</span>
+                <h2>Discover Our Work</h2>
+            </div>
+            <div class="filter-container gs-fade-up">
+                <button class="filter-btn active" data-filter="all">All Projects</button>
+                <button class="filter-btn" data-filter="refinery">Refinery</button>
+                <button class="filter-btn" data-filter="railway">Railway</button>
+                <button class="filter-btn" data-filter="hydro">Hydro</button>
+                <button class="filter-btn" data-filter="industrial">Industrial</button>
+                <button class="filter-btn" data-filter="pressure">Pressure Vessels</button>
+                <button class="filter-btn" data-filter="heat">Heat Exchangers</button>
+                <button class="filter-btn" data-filter="govt">Government</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. PROJECT GALLERY -->
+
+    <section class="gallery-section">
+        <div class="container">
+            <div class="projects-grid">
+                <!-- Card 1 -->
+                <div class="project-card filter-item gs-fade-up" data-category="refinery govt">
+                    <div class="pc-badge">Completed</div>
+                    <div class="pc-image">
+                        <img src="https://images.unsplash.com/photo-1581094288338-2314dddb7ece?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Refinery" loading="lazy">
+                        <div class="pc-overlay"><a href="#" class="btn-read">View Full Case Study</a></div>
+                    </div>
+                    <div class="pc-content">
+                        <span class="pc-cat">Refinery & Fire Fighting</span>
+                        <h3>Indian Oil Corporation</h3>
+                        <div class="pc-details">
+                            <p><i class="far fa-user"></i> <strong>Client:</strong> IOCL</p>
+                            <p><i class="fas fa-map-marker-alt"></i> <strong>Location:</strong> Sangrur</p>
+                            <p><i class="fas fa-tools"></i> <strong>Services:</strong> Manufacturing, Erection, Commissioning</p>
+                        </div>
+                        <a href="#" class="pc-arrow"><i class="fas fa-arrow-right"></i> Explore Project</a>
+                    </div>
+                </div>
+<div class="project-card gs-fade-up" data-delay="0.3">
+    <img src="https://images.unsplash.com/photo-1513828583688-c52646db42da?auto=format&fit=crop&w=800&q=80" alt="ANDRITZ Hydro">
+    <div class="project-overlay">
+        <span class="project-category">Hydro Mechanical</span>
+        <h3>ANDRITZ HYDRO Pvt. Ltd.</h3>
+        <p><i class="fas fa-map-marker-alt"></i> Palwal, Haryana</p>
+    </div>
+</div>
+                <!-- Card 2 -->
+                <div class="project-card filter-item gs-fade-up" data-delay="0.1" data-category="industrial pressure heat">
+                    <div class="pc-badge">Completed</div>
+                    <div class="pc-image">
+                        <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Fabrication" loading="lazy">
+                        <div class="pc-overlay"><a href="#" class="btn-read">View Full Case Study</a></div>
+                    </div>
+                    <div class="pc-content">
+                        <span class="pc-cat">Heavy Fabrication</span>
+                        <h3>Cimmco Birla Ltd.</h3>
+                        <div class="pc-details">
+                            <p><i class="far fa-user"></i> <strong>Client:</strong> Cimmco Birla</p>
+                            <p><i class="fas fa-map-marker-alt"></i> <strong>Location:</strong> Bharatpur</p>
+                            <p><i class="fas fa-tools"></i> <strong>Services:</strong> Heat Exchangers, Pressure Vessels</p>
+                        </div>
+                        <a href="#" class="pc-arrow"><i class="fas fa-arrow-right"></i> Explore Project</a>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="project-card filter-item gs-fade-up" data-delay="0.2" data-category="hydro industrial">
+                    <div class="pc-badge">Completed</div>
+                    <div class="pc-image">
+                        <img src="https://images.unsplash.com/photo-1473445719361-1e5f8ce828ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Hydro" loading="lazy">
+                        <div class="pc-overlay"><a href="#" class="btn-read">View Full Case Study</a></div>
+                    </div>
+                    <div class="pc-content">
+                        <span class="pc-cat">Hydro Mechanical</span>
+                        <h3>Alstom Vadodara</h3>
+                        <div class="pc-details">
+                            <p><i class="far fa-user"></i> <strong>Client:</strong> Alstom</p>
+                            <p><i class="fas fa-map-marker-alt"></i> <strong>Location:</strong> Vadodara</p>
+                            <p><i class="fas fa-tools"></i> <strong>Services:</strong> Equipment Mfg & Commissioning</p>
+                        </div>
+                        <a href="#" class="pc-arrow"><i class="fas fa-arrow-right"></i> Explore Project</a>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="project-card filter-item gs-fade-up" data-category="railway">
+                    <div class="pc-badge">Completed</div>
+                    <div class="pc-image">
+                        <img src="https://images.unsplash.com/photo-1474487548417-781cb71495f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Railway" loading="lazy">
+                        <div class="pc-overlay"><a href="#" class="btn-read">View Full Case Study</a></div>
+                    </div>
+                    <div class="pc-content">
+                        <span class="pc-cat">Railway Wagon</span>
+                        <h3>Jindal Rail Infrastructure</h3>
+                        <div class="pc-details">
+                            <p><i class="far fa-user"></i> <strong>Client:</strong> Jindal Rail</p>
+                            <p><i class="fas fa-map-marker-alt"></i> <strong>Location:</strong> Karjan</p>
+                            <p><i class="fas fa-tools"></i> <strong>Services:</strong> Wagon Mfg, Assembly, Painting</p>
+                        </div>
+                        <a href="#" class="pc-arrow"><i class="fas fa-arrow-right"></i> Explore Project</a>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="project-card filter-item gs-fade-up" data-delay="0.1" data-category="industrial">
+                    <div class="pc-badge">Completed</div>
+                    <div class="pc-image">
+                        <img src="https://images.unsplash.com/photo-1565514020179-026b92b84bb6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Industrial" loading="lazy">
+                        <div class="pc-overlay"><a href="#" class="btn-read">View Full Case Study</a></div>
+                    </div>
+                    <div class="pc-content">
+                        <span class="pc-cat">Industrial Structures</span>
+                        <h3>Modern Industries</h3>
+                        <div class="pc-details">
+                            <p><i class="far fa-user"></i> <strong>Client:</strong> Modern Industries</p>
+                            <p><i class="fas fa-map-marker-alt"></i> <strong>Location:</strong> India</p>
+                            <p><i class="fas fa-tools"></i> <strong>Services:</strong> Heavy Fabrication Works</p>
+                        </div>
+                        <a href="#" class="pc-arrow"><i class="fas fa-arrow-right"></i> Explore Project</a>
+                    </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="project-card filter-item gs-fade-up" data-delay="0.2" data-category="industrial govt">
+                    <div class="pc-badge">Completed</div>
+                    <div class="pc-image">
+                        <img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Engineering" loading="lazy">
+                        <div class="pc-overlay"><a href="#" class="btn-read">View Full Case Study</a></div>
+                    </div>
+                    <div class="pc-content">
+                        <span class="pc-cat">Turnkey Engineering</span>
+                        <h3>V.A Tech Wabag</h3>
+                        <div class="pc-details">
+                            <p><i class="far fa-user"></i> <strong>Client:</strong> VA Tech</p>
+                            <p><i class="fas fa-map-marker-alt"></i> <strong>Location:</strong> Multiple Sites</p>
+                            <p><i class="fas fa-tools"></i> <strong>Services:</strong> Manufacturing & Fabrication</p>
+                        </div>
+                        <a href="#" class="pc-arrow"><i class="fas fa-arrow-right"></i> Explore Project</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. FEATURED PROJECT (70/30 Split Layout) -->
+    <section class="featured-section section-padding bg-navy">
+        <div class="blueprint-bg" style="opacity: 0.1;"></div>
+        <div class="container">
+            <div class="text-center gs-fade-up" style="margin-bottom: 60px;">
+                <span class="gold-label">Case Study</span>
+                <h2 style="color: var(--white);">Featured Project Highlight</h2>
+            </div>
+            
+            <div class="featured-wrapper gs-fade-up">
+                <div class="feat-img">
+                    <img src="https://images.unsplash.com/photo-1542396601-dca920e65fd6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Featured Project" loading="lazy">
+                </div>
+                <div class="feat-content">
+                    <span class="gold-label" style="margin-bottom: 10px;">Indian Oil Corporation Ltd.</span>
+                    <h2>Fire Fighting System Integration</h2>
+                    <ul class="feat-list">
+                        <li><i class="fas fa-check-circle"></i> Heavy Fabrication</li>
+                        <li><i class="fas fa-check-circle"></i> Critical Manufacturing</li>
+                        <li><i class="fas fa-check-circle"></i> Expert Erection</li>
+                        <li><i class="fas fa-check-circle"></i> On-site Commissioning</li>
+                        <li><i class="fas fa-check-circle"></i> Global Quality Standards</li>
+                        <li><i class="fas fa-check-circle"></i> Zero-Delay Timeline</li>
+                    </ul>
+                    <div class="feat-btns">
+                        <a href="#" class="btn btn-primary magnetic-btn" style="width: 100%;">View Full Details</a>
+                        <a href="contact.html" class="btn btn-outline-navy magnetic-btn" style="width: 100%;">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    
+    <!-- 8. COMPANY JOURNEY -->
+    <section class="section-padding bg-light">
+        <div class="container">
+            <div class="text-center gs-fade-up">
+                <span class="gold-label">Legacy</span>
+                <h2>Our Journey</h2>
+            </div>
+            
+            <div class="journey-timeline">
+                <div class="j-item gs-fade-up">
+                    <div class="j-dot"></div>
+                    <div class="j-content">
+                        <div class="j-year">1986</div>
+                        <h4>Company Started</h4>
+                        <p>Foundation of S.M.R. Engineering dedicated to excellence.</p>
+                    </div>
+                </div>
+                
+                <div class="j-item gs-fade-up">
+                    <div class="j-dot"></div>
+                    <div class="j-content">
+                        <div class="j-year">1995</div>
+                        <h4>Heavy Fabrication</h4>
+                        <p>Massive expansion into heavy industrial structural fabrication.</p>
+                    </div>
+                </div>
+                
+                <div class="j-item gs-fade-up">
+                    <div class="j-dot"></div>
+                    <div class="j-content">
+                        <div class="j-year">2005</div>
+                        <h4>Hydro Mechanical</h4>
+                        <p>Successful execution of critical hydro infrastructure projects.</p>
+                    </div>
+                </div>
+                
+                <div class="j-item gs-fade-up">
+                    <div class="j-dot"></div>
+                    <div class="j-content">
+                        <div class="j-year">2015</div>
+                        <h4>Railway Wagon Division</h4>
+                        <p>Advanced manufacturing division established for railway wagons.</p>
+                    </div>
+                </div>
+
+                <div class="j-item gs-fade-up">
+                    <div class="j-dot"></div>
+                    <div class="j-content">
+                        <div class="j-year">2026</div>
+                        <h4>Pan India Projects</h4>
+                        <p>Executing multi-dimensional mega projects across the nation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- 10. MAJOR CLIENTS -->
+    <section class="clients-section">
+        <div class="clients-track">
+            <!-- Set 1 -->
+            <div class="client-logo"><h3>Indian Oil Corporation</h3></div>
+            <div class="client-logo"><h3>Alstom</h3></div>
+            <div class="client-logo"><h3>Jindal Rail Infrastructure</h3></div>
+            <div class="client-logo"><h3>Cimmco Birla</h3></div>
+            <div class="client-logo"><h3>Modern Industries</h3></div>
+            <div class="client-logo"><h3>VA Tech Wabag</h3></div>
+            <!-- Set 2 -->
+            <div class="client-logo"><h3>Indian Oil Corporation</h3></div>
+            <div class="client-logo"><h3>Alstom</h3></div>
+            <div class="client-logo"><h3>Jindal Rail Infrastructure</h3></div>
+            <div class="client-logo"><h3>Cimmco Birla</h3></div>
+            <div class="client-logo"><h3>Modern Industries</h3></div>
+            <div class="client-logo"><h3>VA Tech Wabag</h3></div>
+        </div>
+    </section>
+
+    <!-- 11. QUALITY ASSURANCE -->
+    <section class="quality-section section-padding bg-navy">
+        <div class="blueprint-bg"></div>
+        <div class="container quality-container">
+            <div class="quality-left gs-fade-right">
+                <span class="gold-label">Uncompromising Standards</span>
+                <h2>Quality Assurance</h2>
+                <p>We ensure every fabricated component and installed system meets the most rigorous international standards for safety and operational longevity.</p>
+                <ul class="q-list">
+                    <li><i class="fas fa-check-circle"></i> Strict Quality Standards</li>
+                    <li><i class="fas fa-check-circle"></i> NDT Testing</li>
+                    <li><i class="fas fa-check-circle"></i> Certified Welders</li>
+                    <li><i class="fas fa-check-circle"></i> Advanced Inspection</li>
+                    <li><i class="fas fa-check-circle"></i> Safety Compliance</li>
+                    <li><i class="fas fa-check-circle"></i> Timely Delivery</li>
+                </ul>
+            </div>
+            <div class="quality-right gs-fade-left">
+                <img src="https://images.unsplash.com/photo-1583507025816-17b794029193?auto=format&fit=crop&w=800&q=80" alt="Quality Inspection" loading="lazy">
+            </div>
+        </div>
+    </section>
+
+    <!-- 12. CALL TO ACTION -->
+    <section class="cta-section">
+        <div class="container cta-content gs-fade-up">
+            <h2>Let's Build India's Future Together</h2>
+            <p>Partner with S.M.R. Engineering (I) Private Limited for reliable fabrication, manufacturing, erection and commissioning solutions across India.</p>
+            <div class="cta-btns">
+                <a href="contact.html" class="btn btn-primary magnetic-btn">Get In Touch</a>
+                <a href="contact.html" class="btn btn-outline-white magnetic-btn">Request Quote</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER (EXACTLY FROM INDEX.HTML) -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-col brand-col">
+                <!-- LOGO FIX IN FOOTER -->
+                <a href="index.html" class="logo footer-logo-wrapper">
+                    <img src="logo.png" alt="S.M.R. Engineering Logo">
+                </a>
+                <p>S.M.R. Engineering Private Limited delivers world-class corporate infrastructure with a commitment to quality, safety, and sustainable engineering practices across India.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="about.html">About Company</a></li>
+                    <li><a href="projects.html">Our Portfolio</a></li>
+                    <li><a href="services.html">Our Services</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Us</h4>
+                <ul class="contact-info">
+                    <li><i class="fas fa-map-marker-alt"></i> Shop No-214 Yogi Florencia Beside Voltamp Company, Jambuva, Maneja, Vadodara - 390013, Gujarat.</li>
+                    <li><i class="fas fa-phone-alt"></i> +91 8114429075</li>
+                    <li><i class="fas fa-envelope"></i> info@smrengineering.co</li>
+                    <li><i class="fas fa-globe"></i> www.smrengineering.co</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container text-center">
+                <p>&copy; 2026 S.M.R. Engineering Private Limited. All Rights Reserved. | <strong>GSTIN:</strong> 24ABUCS2492N1ZH</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // Lenis Smooth Scroll
+            const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+            function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+            requestAnimationFrame(raf);
+
+            // Preloader Animation (EXACTLY FROM INDEX.HTML)
+            const tlPreloader = gsap.timeline({ onComplete: () => { document.querySelector('.preloader').style.display = 'none'; } });
+            tlPreloader.to('.preloader-logo', { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" })
+                       .to('.preloader-text', { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }, "-=0.6")
+                       .to('.loading-bar-container', { opacity: 1, duration: 0.3 })
+                       .to('.loading-progress', { width: '100%', duration: 1.2, ease: "power2.inOut" })
+                       .to('.preloader', { yPercent: -100, duration: 0.8, ease: "power4.inOut", delay: 0.2 });
+
+            // Custom Cursor & Scroll Progress
+            const cursor = document.querySelector('.cursor');
+            const scrollProgress = document.querySelector('.scroll-progress');
+            
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+            document.querySelectorAll('a, button, .project-card, .ind-item, .j-content, .why-card').forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.style.transform = 'translate(-50%, -50%) scale(2)');
+                el.addEventListener('mouseleave', () => cursor.style.transform = 'translate(-50%, -50%) scale(1)');
+            });
+
+            // Magnetic Buttons Physics
+            document.querySelectorAll('.magnetic-btn').forEach(btn => {
+                btn.addEventListener('mousemove', e => {
+                    const rect = btn.getBoundingClientRect();
+                    const h = rect.width / 2;
+                    const v = rect.height / 2;
+                    const x = e.clientX - rect.left - h;
+                    const y = e.clientY - rect.top - v;
+                    btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+                });
+                btn.addEventListener('mouseleave', () => {
+                    btn.style.transform = `translate(0px, 0px)`;
+                });
+            });
+
+            // Navbar Scrolled State
+            window.addEventListener('scroll', () => {
+                const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+                scrollProgress.style.width = scrolled + '%';
+                
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 50) navbar.classList.add('scrolled');
+                else navbar.classList.remove('scrolled');
+            });
+
+            // GSAP ScrollReveal Animations
+            gsap.registerPlugin(ScrollTrigger);
+
+            gsap.utils.toArray('.gs-fade-up').forEach(el => {
+                gsap.from(el, { scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none reverse" },
+                    y: 50, opacity: 0, duration: 0.8, delay: el.dataset.delay || 0, ease: "power3.out" });
+            });
+
+            gsap.utils.toArray('.gs-fade-right').forEach(el => {
+                gsap.from(el, { scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none reverse" },
+                    x: -50, opacity: 0, duration: 0.8, delay: el.dataset.delay || 0, ease: "power3.out" });
+            });
+
+            gsap.utils.toArray('.gs-fade-left').forEach(el => {
+                gsap.from(el, { scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none reverse" },
+                    x: 50, opacity: 0, duration: 0.8, delay: el.dataset.delay || 0, ease: "power3.out" });
+            });
+
+            // Animated Process Line
+            ScrollTrigger.create({
+                trigger: '.process-wrapper',
+                start: "top 75%",
+                onEnter: () => {
+                    gsap.to('#processLine', { width: '100%', duration: 2.5, ease: "power2.inOut" });
+                    gsap.utils.toArray('.p-step').forEach((step, i) => {
+                        setTimeout(() => step.classList.add('active'), i * 300);
+                    });
+                }
+            });
+
+            // Number Counter Animation
+            const counters = document.querySelectorAll('.count');
+            let hasCounted = false;
+            ScrollTrigger.create({
+                trigger: '.stats-grid',
+                start: "top 85%",
+                onEnter: () => {
+                    if(!hasCounted) {
+                        counters.forEach(counter => {
+                            const target = +counter.getAttribute('data-target');
+                            gsap.to(counter, { innerHTML: target, duration: 2.5, snap: { innerHTML: 1 }, ease: "power2.out" });
+                        });
+                        hasCounted = true;
+                    }
+                }
+            });
+
+            // Project Filter Logic
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const projects = document.querySelectorAll('.project-card');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    const filter = btn.getAttribute('data-filter');
+                    
+                    projects.forEach(project => {
+                        if(filter === 'all' || project.getAttribute('data-category').includes(filter)) {
+                            project.style.display = 'flex';
+                            gsap.fromTo(project, { scale: 0.9, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5 });
+                        } else {
+                            project.style.display = 'none';
+                        }
+                    });
+                    
+                    setTimeout(() => { ScrollTrigger.refresh(); }, 500);
+                });
+            });
+
+            // Initialize Particles
+            if(document.getElementById('particles-js')) {
+                particlesJS('particles-js', {
+                    "particles": {
+                        "number": { "value": 50, "density": { "enable": true, "value_area": 800 } },
+                        "color": { "value": "#d4af37" },
+                        "shape": { "type": "circle" },
+                        "opacity": { "value": 0.5, "random": true },
+                        "size": { "value": 3, "random": true },
+                        "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.1, "width": 1 },
+                        "move": { "enable": true, "speed": 1.5, "direction": "none", "random": true, "out_mode": "out" }
+                    },
+                    "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": false } } },
+                    "retina_detect": true
+                });
+            }
+        });
+    </script>
+</body>
+</html>

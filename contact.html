@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | S.M.R. Engineering (I) Private Limited</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome 6.6.0 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    
+    <style>
+        /* ==========================================================================
+           BASE STYLES & VARIABLES
+           ========================================================================== */
+        :root {
+            --navy: #0A2342;
+            --navy-light: #12335c;
+            --gold: #C89B3C;
+            --gold-hover: #e0b04a;
+            --light-gray: #f4f6f9;
+            --dark-gray: #333;
+            --white: #ffffff;
+            --font-primary: 'Poppins', sans-serif;
+            --font-secondary: 'Inter', sans-serif;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --shadow-premium: 0 20px 40px rgba(10, 35, 66, 0.08);
+            --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: initial; }
+        body {
+            font-family: var(--font-secondary);
+            color: var(--dark-gray);
+            background-color: var(--light-gray);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 { font-family: var(--font-primary); color: var(--navy); }
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-padding { padding: 100px 0; }
+        .text-center { text-align: center; }
+        .gold-text { color: var(--gold); font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; }
+
+        /* Custom Cursor & Scroll Progress */
+        .cursor {
+            position: fixed; width: 20px; height: 20px;
+            border: 2px solid var(--gold); border-radius: 50%;
+            pointer-events: none; z-index: 99999;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background 0.2s; mix-blend-mode: difference;
+        }
+        .scroll-progress {
+            position: fixed; top: 0; left: 0; width: 0%; height: 4px;
+            background: var(--gold); z-index: 100000;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            padding: 14px 32px; font-family: var(--font-primary); font-weight: 500; 
+            border-radius: 4px; cursor: pointer; transition: var(--transition); position: relative; overflow: hidden;
+        }
+        .btn-primary { background: var(--gold); color: var(--white); border: 2px solid var(--gold); }
+        .btn-primary:hover { background: transparent; color: var(--gold); }
+        .btn-secondary { background: transparent; color: var(--navy); border: 2px solid var(--navy); }
+        .btn-secondary:hover { background: var(--navy); color: var(--white); }
+        .btn-outline-light { background: transparent; color: var(--white); border: 2px solid var(--white); }
+        .btn-outline-light:hover { background: var(--white); color: var(--navy); }
+
+        /* ==========================================================================
+           HEADER & NAVBAR 
+           ========================================================================== */
+        .navbar {
+            position: fixed; top: 0; width: 100%; z-index: 1000; padding: 20px 0;
+            transition: var(--transition); border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .navbar.scrolled {
+            padding: 15px 0; background: rgba(10, 35, 66, 0.95);
+            backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; }
+        .logo img { max-height: 90px; width: auto; object-fit: contain; transition: all 0.3s ease; }
+        .navbar.scrolled .logo img { max-height: 70px; }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { color: var(--white); font-weight: 500; font-size: 0.95rem; position: relative;}
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -5px; left: 0; width: 0;
+            height: 2px; background: var(--gold); transition: var(--transition);
+        }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        .dropdown { position: relative; }
+        .dropdown-content {
+            position: absolute; top: 100%; left: 0; background: var(--white);
+            min-width: 200px; box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            opacity: 0; visibility: hidden; transform: translateY(10px);
+            transition: var(--transition); border-radius: 4px; overflow: hidden;
+        }
+        .dropdown:hover .dropdown-content { opacity: 1; visibility: visible; transform: translateY(0); }
+        .dropdown-content a { display: block; padding: 12px 20px; color: var(--navy); border-bottom: 1px solid #eee; }
+        .dropdown-content a:hover { background: var(--light-gray); color: var(--gold); }
+        .nav-actions { display: flex; align-items: center; gap: 20px; }
+        .search-icon { color: var(--white); cursor: pointer; }
+        .hamburger { display: none; color: var(--white); font-size: 1.5rem; cursor: pointer; }
+
+        /* ==========================================================================
+           PRELOADER
+           ========================================================================== */
+        .preloader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background-color: var(--white); z-index: 999999;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .preloader-content { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 15px; padding: 0 20px; }
+        .preloader-logo { max-height: 120px; opacity: 0; transform: translateY(20px); }
+        .preloader-text {
+            font-family: var(--font-primary); color: var(--navy); font-size: 1.4rem; font-weight: 700;
+            letter-spacing: 1px; opacity: 0; transform: translateY(20px); margin-top: 10px; line-height: 1.4;
+        }
+        .loading-bar-container { width: 250px; height: 4px; background: rgba(0, 0, 0, 0.1); border-radius: 4px; margin-top: 20px; overflow: hidden; opacity: 0; }
+        .loading-progress { width: 0%; height: 100%; background: var(--gold); }
+
+        /* ==========================================================================
+           SECTION 1: PREMIUM HERO BANNER
+           ========================================================================== */
+        .contact-hero {
+            position: relative; height: 60vh; min-height: 500px;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden; padding-top: 100px;
+        }
+        .hero-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('Contact us.png') center/cover no-repeat;
+            z-index: 1; transform: scale(1.05);
+        }
+       .hero-overlay{
+    position:absolute;
+    inset:0;
+    background: linear-gradient(
+        rgba(10,35,66,.35),
+        rgba(10,35,66,.45)
+    );
+}
+        .particles-container { position: absolute; inset: 0; z-index: 3; overflow: hidden; pointer-events: none; }
+        .particle {
+            position: absolute; background: rgba(200, 155, 60, 0.3); border-radius: 50%;
+            box-shadow: 0 0 10px rgba(200, 155, 60, 0.2);
+        }
+        .hero-content {
+            position: relative; z-index: 4; color: var(--white); text-align: center; max-width: 900px; width: 100%;
+        }
+        .breadcrumb {
+            display: inline-block; background: rgba(255,255,255,0.1); padding: 8px 20px;
+            border-radius: 30px; font-size: 0.9rem; font-weight: 500; margin-bottom: 25px;
+            backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.05);
+        }
+        .breadcrumb span { color: var(--gold); margin: 0 8px; }
+        .hero-title { font-size: 3.5rem; line-height: 1.2; margin-bottom: 20px; color: var(--white); word-wrap: break-word; }
+        .hero-desc { font-size: 1.2rem; color: rgba(255,255,255,0.8); max-width: 700px; margin: 0 auto; line-height: 1.8; }
+
+        /* ==========================================================================
+           SECTION 2: QUICK CONTACT CARDS
+           ========================================================================== */
+        .quick-contact-section { margin-top: -60px; position: relative; z-index: 10; padding-bottom: 80px; }
+        .quick-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.5); border-radius: 12px; padding: 40px 25px; text-align: center;
+            box-shadow: var(--shadow-premium); transition: var(--transition); position: relative; overflow: hidden;
+        }
+        .glass-card::before {
+            content: ''; position: absolute; inset: 0; border-radius: 12px; padding: 2px;
+            background: linear-gradient(135deg, transparent, var(--gold), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor; mask-composite: exclude; opacity: 0; transition: var(--transition);
+        }
+        .glass-card:hover { transform: translateY(-10px); box-shadow: 0 30px 50px rgba(10,35,66,0.12); }
+        .glass-card:hover::before { opacity: 1; }
+        
+        .card-icon {
+            width: 60px; height: 60px; background: rgba(200, 155, 60, 0.1); color: var(--gold);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; margin: 0 auto 20px; transition: var(--transition);
+        }
+        .glass-card:hover .card-icon { background: var(--gold); color: var(--white); transform: scale(1.1); }
+        
+        /* FIX FOR CALL ICON ROTATION */
+        .card-icon .fa-phone,
+        .card-icon .fa-phone-alt,
+        .card-icon .fa-phone-volume {
+            transform: none !important;
+            rotate: 0deg !important;
+        }
+
+        .glass-card h3 { font-size: 1.2rem; margin-bottom: 15px; color: var(--navy); }
+        .glass-card p { color: #555; font-size: 0.95rem; font-weight: 500; line-height: 1.6; }
+
+        /* ==========================================================================
+           SECTION 3: LARGE CONTACT AREA
+           ========================================================================== */
+        .contact-area { padding: 80px 0; }
+        .contact-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 50px; align-items: start; }
+        
+        /* Left: Form */
+        .contact-form-wrapper {
+            background: var(--white); padding: 50px; border-radius: 12px; box-shadow: var(--shadow-premium);
+        }
+        .form-header { margin-bottom: 30px; }
+        .form-header h2 { font-size: 2.2rem; margin-bottom: 10px; }
+        .form-header p { color: #666; }
+        
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 25px; }
+        .form-group { display: flex; flex-direction: column; gap: 8px; position: relative; }
+        .form-group label { font-size: 0.9rem; font-weight: 600; color: var(--navy); }
+        .form-control {
+            width: 100%; padding: 15px 20px; font-family: var(--font-secondary); font-size: 1rem;
+            color: var(--dark-gray); background: var(--light-gray); border: 1px solid transparent;
+            border-radius: 6px; outline: none; transition: var(--transition);
+        }
+        .form-control:focus { border-color: var(--gold); background: var(--white); box-shadow: 0 0 0 4px rgba(200,155,60,0.1); }
+        select.form-control { cursor: pointer; appearance: none; background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%230A2342%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 20px top 50%; background-size: 12px auto; }
+        textarea.form-control { resize: vertical; min-height: 150px; }
+        
+        .checkbox-group { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 30px; }
+        .checkbox-group input[type="checkbox"] {
+            width: 18px; height: 18px; cursor: pointer; accent-color: var(--gold); margin-top: 3px;
+        }
+        .checkbox-group label { font-size: 0.9rem; color: #666; cursor: pointer; line-height: 1.5; }
+        .btn-submit { width: 100%; padding: 18px; font-size: 1.1rem; }
+
+        /* Right: 3D Info Card */
+        .company-info-card {
+            background: linear-gradient(145deg, #0A2342, #12335c); color: var(--white);
+            padding: 50px 40px; border-radius: 12px; box-shadow: 0 30px 60px rgba(10,35,66,0.3);
+            position: relative; overflow: hidden; transform-style: preserve-3d;
+            border: 1px solid rgba(255,255,255,0.1); width: 100%;
+        }
+        /* Glow Border */
+        .company-info-card::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: conic-gradient(transparent, rgba(200, 155, 60, 0.3), transparent 30%);
+            animation: rotateGlow 4s linear infinite; z-index: 1; pointer-events: none;
+        }
+        @keyframes rotateGlow { 100% { transform: rotate(1turn); } }
+        .company-info-card::after {
+            content: ''; position: absolute; inset: 2px; background: var(--navy);
+            border-radius: 10px; z-index: 2;
+        }
+        
+        .info-content-wrapper { position: relative; z-index: 3; transform: translateZ(30px); }
+        .info-logo { background: var(--white); padding: 15px; border-radius: 8px; display: inline-block; margin-bottom: 30px; }
+        .info-logo img { max-height: 50px; }
+        .info-content-wrapper h3 { color: var(--white); font-size: 1.8rem; margin-bottom: 5px; }
+        .gst-badge { display: inline-block; background: rgba(200, 155, 60, 0.2); border: 1px solid var(--gold); color: var(--gold); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-bottom: 30px; letter-spacing: 1px; }
+        
+        .info-list { display: flex; flex-direction: column; gap: 20px; }
+        .info-item { display: flex; gap: 15px; align-items: flex-start; }
+        .info-item i { color: var(--gold); font-size: 1.2rem; margin-top: 4px; }
+        .info-details h4 { color: rgba(255,255,255,0.6); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+        .info-details p { font-size: 1.05rem; font-weight: 500; word-break: break-word; }
+        .info-details a { color: var(--white); transition: var(--gold); }
+        .info-details a:hover { color: var(--gold); }
+
+        /* ==========================================================================
+           SECTION 4: INTERACTIVE GOOGLE MAP
+           ========================================================================== */
+        .map-section { padding-bottom: 100px; }
+        .map-wrapper {
+            border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-premium);
+            height: 500px; width: 100%; border: 1px solid rgba(0,0,0,0.05); position: relative;
+        }
+        .map-wrapper iframe { width: 100%; height: 100%; border: none; }
+        
+        /* ==========================================================================
+           SECTION 5: WHY CONTACT US
+           ========================================================================== */
+        .why-contact { padding: 100px 0; background: var(--white); border-top: 1px solid rgba(0,0,0,0.03); }
+        .feature-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-top: 50px; }
+        .feature-card {
+            padding: 40px 30px; text-align: center; border-radius: 8px; transition: var(--transition);
+            background: var(--light-gray); border-bottom: 3px solid transparent; height: 100%;
+        }
+        .feature-card:hover { transform: translateY(-10px); background: var(--white); box-shadow: var(--shadow-premium); border-color: var(--gold); }
+        .feature-icon { font-size: 2.5rem; color: var(--navy); margin-bottom: 20px; transition: var(--transition); }
+        .feature-card:hover .feature-icon { color: var(--gold); transform: scale(1.1); }
+        .feature-card h3 { font-size: 1.2rem; margin-bottom: 15px; }
+        .feature-card p { color: #666; font-size: 0.95rem; }
+
+        /* ==========================================================================
+           SECTION 6: CTA SECTION
+           ========================================================================== */
+        .cta-section {
+            background: var(--navy); color: var(--white); padding: 120px 0; position: relative; overflow: hidden;
+        }
+        .cta-bg {
+            position: absolute; inset: 0; opacity: 0.05;
+            background-image: radial-gradient(var(--gold) 2px, transparent 2px);
+            background-size: 30px 30px;
+            animation: patternMove 20s linear infinite;
+        }
+        @keyframes patternMove { 0% { background-position: 0 0; } 100% { background-position: 300px 300px; } }
+        .cta-content { position: relative; z-index: 2; max-width: 800px; margin: 0 auto; text-align: center; }
+        .cta-content h2 { color: var(--white); font-size: 3rem; margin-bottom: 20px; }
+        .cta-content p { font-size: 1.2rem; opacity: 0.8; margin-bottom: 40px; }
+        .cta-actions { display: flex; justify-content: center; gap: 20px; }
+
+        /* ==========================================================================
+           FLOATING BUTTONS
+           ========================================================================== */
+        .fab-container { position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 15px; z-index: 999; }
+        .fab {
+            width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: var(--white); font-size: 1.2rem; box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            transition: var(--transition); cursor: pointer; border: none; outline: none; text-decoration: none;
+        }
+        .fab-whatsapp { background: #25D366; }
+        .fab-call { background: var(--navy); }
+        .fab-top { background: var(--gold); opacity: 0; visibility: hidden; transform: translateY(20px); }
+        .fab-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+        .fab:hover { transform: translateY(-5px) scale(1.1); box-shadow: 0 15px 25px rgba(0,0,0,0.2); color: var(--white); }
+        
+        .fab { position: relative; }
+        .fab::before {
+            content: attr(data-tooltip); position: absolute; right: 65px; top: 50%; transform: translateY(-50%) scale(0.8);
+            background: var(--navy); color: var(--white); padding: 5px 12px; border-radius: 4px; font-size: 0.8rem;
+            white-space: nowrap; font-family: var(--font-primary); opacity: 0; visibility: hidden; transition: var(--transition); pointer-events: none;
+        }
+        .fab:hover::before { opacity: 1; visibility: visible; transform: translateY(-50%) scale(1); }
+
+        /* ==========================================================================
+           FOOTER (FIXED SOCIAL ICONS)
+           ========================================================================== */
+        .footer { background: var(--navy); color: rgba(255,255,255,0.7); padding-top: 80px; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1.5fr; gap: 50px; margin-bottom: 60px; }
+        .brand-col p { margin-top: 15px; line-height: 1.6; }
+        
+        /* Updated Social Links CSS */
+        .social-links { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            margin-top: 20px; 
+        }
+        .social-links a {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            transition: 0.4s;
+            text-decoration: none;
+        }
+        .social-links a i {
+            font-size: 20px;
+            color: #ffffff;
+            display: block;
+            line-height: 1;
+            opacity: 1;
+            visibility: visible;
+            transform: none !important;
+        }
+        .social-links a:hover {
+            background: #C89B3C;
+            transform: translateY(-5px);
+        }
+        .social-links a:hover i {
+            color: #ffffff;
+        }
+        
+        .footer-col h4 { color: var(--white); font-size: 1.2rem; margin-bottom: 25px; position: relative; font-family: var(--font-primary);}
+        .footer-col h4::after { content: ''; position: absolute; left: 0; bottom: -8px; width: 30px; height: 2px; background: var(--gold); }
+        .footer-col ul li { margin-bottom: 12px; }
+        .footer-col ul a:hover { color: var(--gold); padding-left: 5px; }
+        .contact-info li { display: flex; gap: 15px; margin-bottom: 20px; align-items: flex-start; line-height: 1.5;}
+        .contact-info i { color: var(--gold); margin-top: 5px; }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding: 25px 0; font-size: 0.9rem; }
+
+        /* ==========================================================================
+           RESPONSIVE MEDIA QUERIES (A to Z devices fix)
+           ========================================================================== */
+        @media (max-width: 1200px) {
+            .contact-grid { gap: 30px; }
+        }
+        
+        @media (max-width: 1024px) {
+            .contact-grid { grid-template-columns: 1fr; }
+            .quick-grid { grid-template-columns: repeat(2, 1fr); }
+            .company-info-card { max-width: 100%; }
+        }
+        
+        @media (max-width: 992px) {
+            .nav-links, .nav-actions .btn { display: none; }
+            .hamburger { display: block; }
+            .feature-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+            .hero-title { font-size: 3rem; }
+        }
+        
+        @media (max-width: 768px) {
+            .section-padding { padding: 60px 0; }
+            .hero-title { font-size: 2.2rem; }
+            .hero-desc { font-size: 1rem; margin-bottom: 30px; }
+            .hero { min-height: auto; padding-top: 130px; padding-bottom: 60px; height: auto; }
+            .quick-contact-section { margin-top: -30px; padding-bottom: 60px; }
+            .quick-grid, .feature-grid, .footer-grid { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; gap: 15px; }
+            .contact-area { padding: 50px 0; }
+            .contact-form-wrapper { padding: 30px 20px; }
+            .company-info-card { padding: 40px 20px; transform: none !important; } /* disable 3d hover on mobile */
+            .info-logo img { max-height: 40px; }
+            .cta-section { padding: 80px 0; }
+            .cta-content h2 { font-size: 2.2rem; }
+            .cta-actions { flex-direction: column; width: 100%; }
+            .cta-actions .btn { width: 100%; }
+            .map-wrapper { height: 350px; }
+            .fab-container { bottom: 20px; right: 20px; }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-title { font-size: 1.8rem; }
+            .form-header h2 { font-size: 1.8rem; }
+            .glass-card { padding: 30px 20px; }
+            .info-content-wrapper h3 { font-size: 1.4rem; }
+            .preloader-text { font-size: 1.1rem; }
+            .btn { padding: 12px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- PRELOADER -->
+    <div class="preloader">
+        <div class="preloader-content">
+            <img src="logo.png" alt="S.M.R. Engineering Logo" class="preloader-logo">
+                        <h2 class="preloader-text">CONTACT US</h2>
+
+            <h2 class="preloader-text">S.M.R. ENGINEERING PRIVATE LIMITED</h2>
+            <div class="loading-bar-container">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Cursor & Scroll Progress -->
+    <div class="cursor"></div>
+    <div class="scroll-progress"></div>
+
+    <!-- HEADER / NAVBAR -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <img src="logo.png" alt="S.M.R. Engineering Logo">
+            </a>
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+        
+                    <a href="services.html">Services </a>
+                   
+                
+                <a href="projects.html">Projects</a>
+            
+                <a href="contact.html" class="active">Contact</a>
+            </nav>
+            <div class="nav-actions">
+                <i class="fas fa-search search-icon"></i>
+                <a href="contact.html" class="btn btn-primary magnetic-btn">Get In Touch</a>
+                <div class="hamburger"><i class="fas fa-bars"></i></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- SECTION 1: PREMIUM HERO BANNER -->
+    <section class="contact-hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="particles-container" id="particles"></div>
+        
+        <div class="container hero-content">
+            <div class="breadcrumb gs-reveal">
+                <a href="#">Home</a> <span>/</span> Contact
+            </div>
+            <h1 class="hero-title gs-reveal">Let's Start Your Next <br><span class="gold-text" style="font-size:inherit; letter-spacing:0; text-transform:none;">Engineering Project</span></h1>
+        </div>
+    </section>
+
+    <!-- SECTION 2: QUICK CONTACT CARDS -->
+    <section class="quick-contact-section">
+        <div class="container quick-grid">
+            <div class="glass-card gs-fade-up">
+                <!-- Phone icon fixed with normal fa-phone and CSS rotation removal -->
+                <div class="card-icon"><i class="fa-solid fa-phone"></i></div>
+                <h3>Call Us</h3>
+                <p>+91 8114429075</p>
+            </div>
+            <div class="glass-card gs-fade-up" data-delay="0.1">
+                <div class="card-icon"><i class="fa-solid fa-envelope"></i></div>
+                <h3>Email</h3>
+                <p>info@smrengineering.co</p>
+            </div>
+            <div class="glass-card gs-fade-up" data-delay="0.2">
+                <div class="card-icon"><i class="fa-solid fa-map-marker-alt"></i></div>
+                <h3>Office</h3>
+                <p>Shop No 214, Yogi Florencia<br>Vadodara Gujarat</p>
+            </div>
+            <div class="glass-card gs-fade-up" data-delay="0.3">
+                <div class="card-icon"><i class="fa-solid fa-clock"></i></div>
+                <h3>Business Hours</h3>
+                <p>Monday - Saturday<br>9 AM - 6 PM</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: LARGE CONTACT AREA -->
+    <section class="contact-area">
+        <div class="container contact-grid">
+            
+            <!-- Left Side: Form -->
+            <div class="contact-form-wrapper gs-fade-right">
+                <div class="form-header">
+                    <h2>Send an Enquiry</h2>
+                    <p>Fill out the form below and our technical team will get back to you promptly.</p>
+                </div>
+                <form id="contactForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <input type="text" id="name" class="form-control" required placeholder="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label for="company">Company Name</label>
+                            <input type="text" id="company" class="form-control" placeholder="Your Organization">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" class="form-control" required placeholder="john@company.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" class="form-control" required placeholder="+91 00000 00000">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" class="form-control" placeholder="Project Inquiry">
+                        </div>
+                        <div class="form-group">
+                            <label for="service">Service Required</label>
+                            <select id="service" class="form-control">
+                                <option value="" disabled selected>Select a Service...</option>
+                                <option value="heavy_fabrication">Heavy Fabrication</option>
+                                <option value="pressure_vessels">Pressure Vessels</option>
+                                <option value="heat_exchangers">Heat Exchangers</option>
+                                <option value="hydro_mechanical">Hydro Mechanical</option>
+                                <option value="railway_wagons">Railway Wagons</option>
+                                <option value="industrial_piping">Industrial Piping</option>
+                                <option value="fire_fighting">Fire Fighting</option>
+                                <option value="structural_fabrication">Structural Fabrication</option>
+                                <option value="commissioning">Commissioning</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 25px;">
+                        <label for="message">Message *</label>
+                        <textarea id="message" class="form-control" required placeholder="Describe your project requirements..."></textarea>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="privacy" required>
+                        <label for="privacy">I agree to the privacy policy and terms of service.</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-submit magnetic-btn">
+                        Send Enquiry <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Right Side: Company Info Card -->
+            <div class="company-info-card gs-fade-left js-tilt">
+                <div class="info-content-wrapper">
+                    <div class="info-logo">
+                        <img src="logo.png" alt="S.M.R. Engineering Logo">
+                    </div>
+                    <h3>S.M.R. Engineering (I) Pvt Ltd</h3>
+                    <div class="gst-badge">GSTIN: 24ABUCS2492N1ZH</div>
+                    
+                    <div class="info-list">
+                        <div class="info-item">
+                            <i class="fa-solid fa-user-tie"></i>
+                            <div class="info-details">
+                                <h4>Managing Director</h4>
+                                <p>Mr. Kalpnath</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <!-- Fixed phone icon -->
+                            <i class="fa-solid fa-phone"></i>
+                            <div class="info-details">
+                                <h4>Phone</h4>
+                                <p><a href="tel:+918114429075">+91 8114429075</a></p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fa-solid fa-envelope"></i>
+                            <div class="info-details">
+                                <h4>Email</h4>
+                                <p><a href="mailto:info@smrengineering.co">info@smrengineering.co</a></p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fa-solid fa-globe"></i>
+                            <div class="info-details">
+                                <h4>Website</h4>
+                                <p><a href="http://www.smrengineering.co" target="_blank">www.smrengineering.co</a></p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fa-solid fa-map-marker-alt"></i>
+                            <div class="info-details">
+                                <h4>Address</h4>
+                                <p>Shop No 214, Yogi Florencia<br>Beside Voltamp Company<br>Jambuva, Maneja<br>Vadodara, Gujarat</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: INTERACTIVE GOOGLE MAP -->
+    <section class="map-section">
+    <div class="container">
+        <div class="section-heading text-center gs-fade-up">
+            <span class="gold-text">Location</span>
+            <h2>Find Our Office</h2>
+        </div>
+
+        <div class="map-wrapper gs-fade-up">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2688.165332436211!2d73.18561877356647!3d22.23166254538308!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395fc5407d0acc71%3A0x384824b9d4df1ad5!2sYogi%20Florencia!5e1!3m2!1sen!2sin!4v1785945216040!5m2!1sen!2sin"
+                width="100%"
+                height="450"
+                style="border:0; border-radius:16px;"
+                allowfullscreen
+                loading="lazy"
+                referrerpolicy="strict-origin-when-cross-origin">
+            </iframe>
+        </div>
+    </div>
+</section>
+
+    <!-- SECTION 5: WHY CONTACT US -->
+    <section class="why-contact">
+        <div class="container">
+            <div class="section-heading text-center gs-fade-up">
+                <span class="gold-text">Our Guarantee</span>
+                <h2>Why Partner With Us</h2>
+            </div>
+            <div class="feature-grid">
+                <div class="feature-card gs-fade-up">
+                    <i class="fa-solid fa-hard-hat feature-icon"></i>
+                    <h3>Engineering Consultation</h3>
+                    <p>Expert advice tailored to your heavy fabrication and structural needs.</p>
+                </div>
+                <div class="feature-card gs-fade-up" data-delay="0.1">
+                    <i class="fa-solid fa-bolt feature-icon"></i>
+                    <h3>Fast Response</h3>
+                    <p>Our technical team ensures quick turnarounds on all project inquiries.</p>
+                </div>
+                <div class="feature-card gs-fade-up" data-delay="0.2">
+                    <i class="fa-solid fa-users-cog feature-icon"></i>
+                    <h3>Experienced Team</h3>
+                    <p>Backed by decades of expertise in industrial manufacturing & EPC.</p>
+                </div>
+                <div class="feature-card gs-fade-up" data-delay="0.3">
+                    <i class="fa-solid fa-shield-alt feature-icon"></i>
+                    <h3>Reliable Support</h3>
+                    <p>End-to-end assistance from initial design to final commissioning.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: CTA SECTION -->
+    <section class="cta-section">
+        <div class="cta-bg"></div>
+        <div class="container cta-content gs-fade-up">
+            <h2>Ready To Build Something Great?</h2>
+            <p>Let's discuss your next industrial engineering project. Our team is ready to deliver world-class solutions.</p>
+            <div class="cta-actions">
+                <!-- Fixed phone icon -->
+                <a href="tel:+918114429075" class="btn btn-primary magnetic-btn"><i class="fa-solid fa-phone"></i> Call Now</a>
+                <a href="mailto:info@smrengineering.co" class="btn btn-outline-light magnetic-btn"><i class="fa-solid fa-envelope"></i> Send Email</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FLOATING BUTTONS -->
+    <div class="fab-container">
+        <a href="https://wa.me/918114429075" class="fab fab-whatsapp" target="_blank" data-tooltip="WhatsApp Us">
+            <i class="fa-brands fa-whatsapp"></i>
+        </a>
+        <a href="tel:+918114429075" class="fab fab-call" data-tooltip="Call Us">
+            <!-- Fixed phone icon -->
+            <i class="fa-solid fa-phone"></i>
+        </a>
+        <button class="fab fab-top" id="backToTop" data-tooltip="Back To Top">
+            <i class="fa-solid fa-chevron-up"></i>
+        </button>
+    </div>
+    
+    <!-- FOOTER SECTION -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-col brand-col">
+                <a href="#" class="logo">
+                    <img src="logo.png" alt="S.M.R. Engineering Logo">
+                </a>
+                <p style="margin-top: 15px;">S.M.R. Engineering Private Limited delivers world-class corporate infrastructure with a commitment to quality, safety, and sustainable engineering practices across India.</p>
+               
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="about.html">About Company</a></li>
+                    <li><a href="projects.html">Our Projects</a></li>
+                    <li><a href="services.html">Our Services</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="faq.html ">FAQs</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Us</h4>
+                <ul class="contact-info">
+                    <li><i class="fa-solid fa-map-marker-alt"></i> Shop No-214 Yogi Florencia Beside Voltamp Company, Jambuva, Maneja, Vadodara - 390013, Gujarat.</li>
+                    <!-- Fixed phone icon -->
+                    <li><i class="fa-solid fa-phone"></i> +91 8114429075</li>
+                    <li><i class="fa-solid fa-envelope"></i> info@smrengineering.co</li>
+                    <li><i class="fa-solid fa-globe"></i> www.smrengineering.co</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container text-center">
+                <p>&copy; 2026 S.M.R. Engineering Private Limited. All Rights Reserved. | <strong>GSTIN:</strong> 24ABUCS2492N1ZH</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- Lenis Smooth Scroll -->
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+    
+    <!-- Custom Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Initialize Smooth Scroll (Lenis)
+            const lenis = new Lenis({
+                duration: 1.2,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                smooth: true,
+            });
+            function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+            requestAnimationFrame(raf);
+
+            // Setup GSAP plugins
+            gsap.registerPlugin(ScrollTrigger);
+
+            // 2. Preloader GSAP Animation
+            const tlPreloader = gsap.timeline({
+                onComplete: () => {
+                    document.querySelector('.preloader').style.display = 'none';
+                }
+            });
+            tlPreloader.to('.preloader-logo, .preloader-text', {
+                y: 0, opacity: 1, duration: 0.8, stagger: 0.2, ease: "power3.out"
+            })
+            .to('.loading-bar-container', { opacity: 1, duration: 0.3 })
+            .to('.loading-progress', { width: '100%', duration: 1.2, ease: "power2.inOut" })
+            .to('.preloader', {
+                yPercent: -100, duration: 0.8, ease: "power4.inOut", delay: 0.2
+            });
+
+            // 3. Custom Cursor Logic
+            const cursor = document.querySelector('.cursor');
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+            document.querySelectorAll('a, button, input, textarea, select, .magnetic-btn, .js-tilt, .checkbox-group label').forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursor.style.transform = 'translate(-50%, -50%) scale(2)';
+                    cursor.style.background = 'rgba(200, 155, 60, 0.2)';
+                });
+                el.addEventListener('mouseleave', () => {
+                    cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+                    cursor.style.background = 'transparent';
+                });
+            });
+
+            // 4. Scroll Progress Bar & Navbar
+            const progressBar = document.querySelector('.scroll-progress');
+            const navbar = document.querySelector('.navbar');
+            const backToTopBtn = document.getElementById('backToTop');
+            
+            window.addEventListener('scroll', () => {
+                // Progress
+                const totalScroll = document.documentElement.scrollTop;
+                const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scroll = `${totalScroll / windowHeight * 100}%`;
+                progressBar.style.width = scroll;
+                
+                // Navbar
+                if (window.scrollY > 50) navbar.classList.add('scrolled');
+                else navbar.classList.remove('scrolled');
+
+                // Back to Top Fab
+                if (window.scrollY > 500) backToTopBtn.classList.add('visible');
+                else backToTopBtn.classList.remove('visible');
+            });
+
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // 5. Hero Floating Particles Generation
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 20;
+            for(let i=0; i<particleCount; i++){
+                let p = document.createElement('div');
+                p.classList.add('particle');
+                let size = Math.random() * 8 + 4;
+                p.style.width = `${size}px`;
+                p.style.height = `${size}px`;
+                p.style.left = `${Math.random() * 100}%`;
+                p.style.top = `${Math.random() * 100}%`;
+                particlesContainer.appendChild(p);
+                
+                // Animate Particle
+                gsap.to(p, {
+                    y: `-${Math.random() * 150 + 50}`,
+                    x: `${(Math.random() - 0.5) * 100}`,
+                    opacity: 0,
+                    duration: Math.random() * 3 + 2,
+                    repeat: -1,
+                    ease: "none",
+                    delay: Math.random() * 2
+                });
+            }
+
+            // 6. Reveal Animations
+            const tlHero = gsap.timeline({ delay: 2.2 }); 
+            tlHero.from(".gs-reveal", {
+                y: 50, opacity: 0, duration: 1, stagger: 0.15, ease: "power3.out"
+            });
+
+            gsap.utils.toArray('.gs-fade-up').forEach(element => {
+                let delay = element.getAttribute('data-delay') || 0;
+                gsap.from(element, {
+                    scrollTrigger: { trigger: element, start: "top 85%", toggleActions: "play none none reverse" },
+                    y: 60, opacity: 0, duration: 0.8, delay: Number(delay), ease: "power3.out"
+                });
+            });
+
+            gsap.from(".gs-fade-right", {
+                scrollTrigger: { trigger: ".contact-grid", start: "top 75%" },
+                x: -50, opacity: 0, duration: 1, ease: "power3.out"
+            });
+            gsap.from(".gs-fade-left", {
+                scrollTrigger: { trigger: ".contact-grid", start: "top 75%" },
+                x: 50, opacity: 0, duration: 1, ease: "power3.out", delay: 0.2
+            });
+
+            // 7. Magnetic Button Effect
+            document.querySelectorAll('.magnetic-btn').forEach(btn => {
+                btn.addEventListener('mousemove', (e) => {
+                    const rect = btn.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.3, ease: "power2.out" });
+                });
+                btn.addEventListener('mouseleave', () => {
+                    gsap.to(btn, { x: 0, y: 0, duration: 0.3, ease: "elastic.out(1, 0.3)" });
+                });
+            });
+
+            // 8. 3D Card Hover Effect
+            const tiltCard = document.querySelector('.js-tilt');
+            if(tiltCard) {
+                // Disable 3D tilt effect if screen width is 768px or below (for mobile optimization)
+                const checkScreenSize = () => {
+                    if (window.innerWidth <= 768) {
+                        tiltCard.style.transform = 'none';
+                        return false;
+                    }
+                    return true;
+                };
+
+                tiltCard.addEventListener('mousemove', (e) => {
+                    if(!checkScreenSize()) return;
+                    const rect = tiltCard.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = ((y - centerY) / centerY) * -10;
+                    const rotateY = ((x - centerX) / centerX) * 10;
+
+                    gsap.to(tiltCard, {
+                        rotateX: rotateX, rotateY: rotateY, duration: 0.5, ease: "power2.out"
+                    });
+                });
+                tiltCard.addEventListener('mouseleave', () => {
+                    if(!checkScreenSize()) return;
+                    gsap.to(tiltCard, {
+                        rotateX: 0, rotateY: 0, duration: 0.8, ease: "elastic.out(1, 0.5)"
+                    });
+                });
+                
+                // Add resize listener to clear transforms when resizing to mobile
+                window.addEventListener('resize', () => {
+                    if (window.innerWidth <= 768) {
+                        gsap.set(tiltCard, { clearProps: "all" });
+                    }
+                });
+            }
+
+            // Form Submit Mock
+            document.getElementById('contactForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const btn = e.target.querySelector('button');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = 'Sending... <i class="fa-solid fa-spinner fa-spin"></i>';
+                setTimeout(() => {
+                    btn.innerHTML = 'Message Sent! <i class="fa-solid fa-check"></i>';
+                    btn.style.background = '#25D366';
+                    btn.style.borderColor = '#25D366';
+                    e.target.reset();
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.style.background = '';
+                        btn.style.borderColor = '';
+                    }, 3000);
+                }, 1500);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services | S.M.R Engineering Co.</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ==========================================================================
+           BASE VARIABLES & RESETS
+           ========================================================================== */
+        :root {
+            --navy: #0a2342;
+            --navy-light: #12345e;
+            --gold: #d4af37;
+            --gold-hover: #bda032;
+            --white: #ffffff;
+            --light-gray: #f5f7fa;
+            --dark-gray: #4a5568;
+            --font-primary: 'Poppins', sans-serif;
+            --font-secondary: 'Inter', sans-serif;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --shadow-premium: 0 20px 40px rgba(10, 35, 66, 0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-secondary);
+            color: var(--dark-gray);
+            background-color: var(--white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 { font-family: var(--font-primary); color: var(--navy); line-height: 1.2; }
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+        img { max-width: 100%; height: auto; display: block; }
+
+        .container { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 20px; }
+        .section-padding { padding: 100px 0; }
+        .text-center { text-align: center; }
+        .gold-text { color: var(--gold); font-weight: 600; text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; display: block; margin-bottom: 15px; }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            gap: 10px; padding: 14px 32px; border-radius: 4px;
+            font-family: var(--font-primary); font-weight: 600; cursor: pointer;
+            border: 2px solid transparent; transition: var(--transition);
+        }
+        .btn-primary { background-color: var(--gold); color: var(--white); }
+        .btn-primary:hover {
+            background-color: var(--navy); color: var(--white);
+            box-shadow: 0 10px 20px rgba(10,35,66,0.2); transform: translateY(-2px);
+        }
+
+        /* ==========================================================================
+           HEADER & NAVIGATION 
+           ========================================================================== */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 9999;
+            display: flex; align-items: center; justify-content: center;
+            padding: 18px 0; background: #0A2342;
+            backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(255,255,255,.08); transition: all .4s ease;
+            box-shadow: 0 12px 35px rgba(0,0,0,.15);
+        }
+        .navbar.scrolled { padding: 14px 0; box-shadow: 0 12px 35px rgba(0,0,0,.25); }
+        .nav-container { width: 92%; max-width: 1400px; display: flex; align-items: center; justify-content: space-between; }
+        .logo { display: flex; align-items: center; background: transparent; padding: 0; }
+        .logo h2 { color: var(--gold); margin: 0; font-size: 1.5rem; }
+        .nav-links { display: flex; align-items: center; gap: 34px; }
+        .nav-links a { color: #fff; font-size: 17px; font-weight: 600; position: relative; transition: .3s; }
+        .nav-links a::after { content: ""; position: absolute; left: 0; bottom: -8px; width: 0; height: 2px; background: #D4A73C; transition: .35s; }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        .nav-actions { display: flex; align-items: center; gap: 25px; }
+        .nav-actions i { color: #fff; font-size: 22px; cursor: pointer; transition: .3s; }
+        .nav-actions i:hover { color: #D4A73C; }
+        .hamburger { display: none; color: #fff; font-size: 28px; cursor: pointer; }
+
+        @media(max-width:991px) { .nav-links { display: none; } .hamburger { display: block; } }
+
+        /* ==========================================================================
+           PAGE 1: PREMIUM HERO SECTION
+           ========================================================================== */
+        .hero-services {
+            position: relative; 
+            height: 60vh; 
+            min-height: 500px;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            overflow: hidden;
+            
+            /* BACKGROUND IMAGE INTEGRATION */
+            background-color: var(--navy);
+            background-image: url('service.png');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        .hero-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(135deg, rgba(10,35,66,.85) 0%, rgba(10,35,66,.95) 100%); z-index: 1;
+        }
+        .blueprint-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px; z-index: 2; opacity: 0.5;
+            animation: panBg 30s linear infinite;
+        }
+        @keyframes panBg { 0% { background-position: 0 0; } 100% { background-position: 400px 400px; } }
+        #particles-js { position: absolute; width: 100%; height: 100%; z-index: 3; top: 0; left: 0; }
+        .hero-content-center {
+            position: relative; z-index: 4; text-align: center; color: var(--white); max-width: 900px; margin-top: 80px;
+        }
+        .hero-services h1 { font-size: 3.5rem; color: var(--white); margin-bottom: 20px; font-weight: 700; line-height: 1.1; }
+        .hero-services p { font-size: 1.25rem; color: rgba(255,255,255,0.9); max-width: 700px; margin: 0 auto; }
+
+        /* ==========================================================================
+           PAGE 2: INTERACTIVE SERVICES GRID (9 CARDS)
+           ========================================================================== */
+        .core-services {
+            background-color: var(--navy); position: relative; overflow: hidden; padding: 100px 0;
+        }
+        .core-services .section-heading h2, .core-services .section-heading p { color: var(--white); }
+        .services-3d-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px;
+            perspective: 1000px; position: relative; z-index: 5;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px;
+            padding: 40px 30px; position: relative; overflow: hidden;
+            transform-style: preserve-3d; transition: transform 0.5s ease, box-shadow 0.5s ease; cursor: pointer;
+        }
+        .glass-card::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+            transform: skewX(-20deg); transition: 0.7s;
+        }
+        .glass-card:hover::before { left: 150%; }
+        .glass-card:hover { box-shadow: 0 15px 35px rgba(0,0,0,0.5); border-color: rgba(212, 175, 55, 0.5); }
+        .glass-icon { font-size: 3rem; color: var(--gold); margin-bottom: 20px; transform: translateZ(30px); }
+        .glass-card h3 { color: var(--white); font-size: 1.4rem; margin-bottom: 15px; transform: translateZ(20px); }
+        .glass-card p { color: rgba(255,255,255,0.7); font-size: 0.95rem; margin-bottom: 25px; transform: translateZ(10px); }
+        .glass-btn {
+            display: inline-block; color: var(--gold); font-weight: 600; text-transform: uppercase;
+            font-size: 0.85rem; letter-spacing: 1px; transform: translateZ(15px); pointer-events: none;
+        }
+
+        /* ==========================================================================
+           PAGE 3: DETAILED ENGINEERING SERVICES (Alternating Sections)
+           ========================================================================== */
+        .detailed-service-row {
+            display: flex; align-items: center; gap: 60px; padding: 80px 0; border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .detailed-service-row:nth-child(even) { flex-direction: row-reverse; background-color: var(--light-gray); }
+        .ds-image { flex: 1; position: relative; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-premium); }
+        .ds-image img { width: 100%; height: 450px; object-fit: cover; }
+        .ds-content { flex: 1; padding: 0 20px; }
+        .ds-content h2 { font-size: 2.2rem; margin-bottom: 15px; position: relative; padding-bottom: 15px; }
+        .ds-content h2::after { content: ''; position: absolute; left: 0; bottom: 0; width: 60px; height: 3px; background: var(--gold); }
+        .ds-content p { font-size: 1.1rem; color: var(--dark-gray); margin-bottom: 20px; }
+        .ds-list { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .ds-list li { position: relative; padding-left: 25px; font-weight: 500; color: var(--navy); }
+        .ds-list li i { position: absolute; left: 0; top: 4px; color: var(--gold); }
+
+        /* ==========================================================================
+           MODAL / DETAILS POPUP
+           ========================================================================== */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(10, 35, 66, 0.9); backdrop-filter: blur(10px);
+            z-index: 100000; display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: var(--transition);
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .modal-content {
+            background: var(--white); border-radius: 12px; width: 90%; max-width: 700px;
+            padding: 50px; position: relative; transform: translateY(50px) scale(0.95);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+        .modal-overlay.active .modal-content { transform: translateY(0) scale(1); }
+        .close-btn {
+            position: absolute; top: 20px; right: 25px; font-size: 1.8rem; color: var(--dark-gray); cursor: pointer; transition: var(--transition);
+        }
+        .close-btn:hover { color: var(--gold); transform: rotate(90deg); }
+        .modal-header { display: flex; align-items: center; gap: 20px; margin-bottom: 20px; border-bottom: 2px solid var(--light-gray); padding-bottom: 20px; }
+        .modal-header i { font-size: 2.5rem; color: var(--gold); }
+        .modal-header h2 { color: var(--navy); font-size: 2rem; margin: 0; }
+        .modal-body { color: var(--dark-gray); font-size: 1.05rem; }
+        .modal-body .short-desc { font-weight: 600; color: var(--navy); margin-bottom: 20px; font-size: 1.15rem; }
+        .modal-body p { margin-bottom: 15px; }
+        .modal-tags { margin-top: 25px; display: flex; flex-wrap: wrap; gap: 10px; }
+        .modal-tags span { background: var(--light-gray); color: var(--navy); padding: 8px 15px; border-radius: 4px; font-size: 0.85rem; font-weight: 600; border-left: 3px solid var(--gold); }
+
+        /* ==========================================================================
+           FOOTER 
+           ========================================================================== */
+        .footer { background-color: var(--navy); color: var(--white); padding: 80px 0 0; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1.5fr; gap: 50px; margin-bottom: 50px; }
+        .brand-col p { color: rgba(255,255,255,0.7); margin-top: 15px; font-size: 0.95rem; }
+        .social-links { display: flex; gap: 15px; margin-top: 25px; }
+        .social-links a { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; justify-content: center; align-items: center; color: var(--white); transition: var(--transition); }
+        .social-links a:hover { background: var(--gold); }
+        .footer-col h4 { color: var(--white); font-size: 1.2rem; margin-bottom: 25px; position: relative; padding-bottom: 10px; }
+        .footer-col h4::after { content: ''; position: absolute; left: 0; bottom: 0; width: 40px; height: 2px; background: var(--gold); }
+        .footer-col ul li { margin-bottom: 12px; }
+        .footer-col ul li a { color: rgba(255,255,255,0.7); font-size: 0.95rem; }
+        .footer-col ul li a:hover { color: var(--gold); padding-left: 5px; }
+        .contact-info li { display: flex; gap: 15px; color: rgba(255,255,255,0.7); margin-bottom: 20px; line-height: 1.5; font-size: 0.95rem; }
+        .contact-info li i { color: var(--gold); font-size: 1.2rem; margin-top: 3px; }
+        .footer-bottom { background: #071930; padding: 25px 0; font-size: 0.9rem; color: rgba(255,255,255,0.6); }
+
+        /* ==========================================================================
+           UTILITIES & ANIMATIONS
+           ========================================================================== */
+        .cursor { width: 20px; height: 20px; border: 2px solid var(--gold); border-radius: 50%; position: fixed; pointer-events: none; z-index: 999999; transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s; mix-blend-mode: difference; }
+        .scroll-progress { position: fixed; top: 0; left: 0; width: 0%; height: 4px; background: var(--gold); z-index: 99999; }
+        
+        /* ===== PRELOADER ===== */
+
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: var(--white);
+    z-index: 999999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.preloader-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    text-align: center;
+}
+
+.preloader-logo {
+    max-height: 120px;
+    width: auto;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.preloader-text {
+    font-family: var(--font-primary);
+    color: var(--navy);
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    opacity: 0;
+    transform: translateY(20px);
+    margin-top: 10px;
+}
+
+.loading-bar-container {
+    width: 250px;
+    height: 4px;
+    background: rgba(0,0,0,0.1);
+    border-radius: 4px;
+    margin-top: 20px;
+    overflow: hidden;
+    opacity: 0;
+}
+
+.loading-progress {
+    width: 0%;
+    height: 100%;
+    background: var(--gold);
+}
+        @media (max-width: 768px) {
+            .hero-services h1 { font-size: 2.5rem; }
+            .detailed-service-row, .detailed-service-row:nth-child(even) { flex-direction: column; gap: 40px; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- PRELOADER -->
+<div class="preloader">
+    <div class="preloader-content">
+        <img src="logo.png" alt="S.M.R. Engineering Logo" class="preloader-logo">
+
+        <h2 class="preloader-text">SERVICES</h2>
+        <h2 class="preloader-text">S.M.R. ENGINEERING PRIVATE LIMITED</h2>
+
+        <div class="loading-bar-container">
+            <div class="loading-progress"></div>
+        </div>
+    </div>
+</div>
+    <div class="cursor"></div>
+    <div class="scroll-progress"></div>
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <h2>S.M. Engineering</h2>
+            </a>
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="serviceslanding.html" class="active">Services</a>
+                <a href="projects.html">Projects</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+            <div class="nav-actions">
+                <i class="fas fa-search search-icon"></i>
+                <a href="contact.html" class="btn btn-primary">Get In Touch</a>
+                <div class="hamburger"><i class="fas fa-bars"></i></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero-services">
+        <div id="particles-js"></div>
+        <div class="blueprint-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="container hero-content-center">
+            <div class="breadcrumb gs-fade-up">
+                <a href="index.html" style="color: rgba(255,255,255,0.7); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;">Home</a> <span style="color: var(--gold);">&gt;</span> <span style="color: rgba(255,255,255,0.7); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;">Services</span>
+            </div>
+            <h1 class="gs-fade-up" data-delay="0.2">Our Core Engineering Services</h1>
+            <p class="gs-fade-up" data-delay="0.4">Precision engineering disciplines executed by certified professionals. Explore our capabilities below.</p>
+        </div>
+    </section>
+
+    <!-- INTERACTIVE GRID SECTION (9 CARDS) -->
+    <section class="core-services">
+        <div class="blueprint-bg" style="opacity: 0.15;"></div>
+        <div class="container">
+            <div class="section-heading text-center gs-fade-up" style="margin-bottom: 60px;">
+                <span class="gold-text">Quick Overview</span>
+                <h2>Click to Explore Capabilities</h2>
+            </div>
+            <div class="services-3d-grid" id="servicesGrid">
+                <!-- Javascript will inject the 9 cards here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ALTERNATING DETAILED SLIDES (From image_05caed.jpg) -->
+    <section id="details" class="detailed-services">
+        
+        <!-- Slide 1 -->
+        <div class="detailed-service-row">
+            <div class="container" style="display: flex; gap: 60px; align-items: center; flex-wrap: wrap;">
+                <div class="ds-image gs-fade-right"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmsSM2Zx80yrBCkoDSC7OpaJUYpdFKvCYz0_hinLvmDQ&s=10" alt="Heavy Fabrication"></div>
+                <div class="ds-content gs-fade-left">
+                    <span class="gold-text">01. Heavy Structures</span>
+                    <h2>Structural & Heavy Fabrication</h2>
+                    <p>We are industry leaders in the fabrication of massive industrial structures, heavy-duty tanks, and highly customized steel components. Utilizing advanced welding technologies and strict metallurgical protocols, we ensure structural integrity for the most demanding environments.</p>
+                    <ul class="ds-list">
+                        <li><i class="fas fa-check-circle"></i> Custom Steel Components</li>
+                        <li><i class="fas fa-check-circle"></i> Heavy Industrial Tanks</li>
+                        <li><i class="fas fa-check-circle"></i> Load-bearing Structures</li>
+                        <li><i class="fas fa-check-circle"></i> Non-destructive Testing</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="detailed-service-row">
+            <div class="container" style="display: flex; gap: 60px; align-items: center; flex-direction: row-reverse; flex-wrap: wrap;">
+                <div class="ds-image gs-fade-left"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRoK7-ixHuIw78tqHC3_RGSuLgc57iqc9ZU_SCJ6LILg&s=10" alt="Pressure Vessels & Heat Exchangers"></div>
+                <div class="ds-content gs-fade-right">
+                    <span class="gold-text">02. Static Equipment</span>
+                    <h2>Pressure Vessels & Heat Exchangers</h2>
+                    <p>S.M. Engineering specializes in the fabrication of Pressure Vessels according to strict global industrial quality standards (ASME). Additionally, we manufacture robust shell and tube Heat Exchangers optimized for heavy refinery and chemical plant applications.</p>
+                    <ul class="ds-list">
+                        <li><i class="fas fa-check-circle"></i> High-pressure Tolerance</li>
+                        <li><i class="fas fa-check-circle"></i> Refinery Applications</li>
+                        <li><i class="fas fa-check-circle"></i> Chemical Processing Units</li>
+                        <li><i class="fas fa-check-circle"></i> ASME Standard Compliance</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="detailed-service-row">
+            <div class="container" style="display: flex; gap: 60px; align-items: center; flex-wrap: wrap;">
+                <div class="ds-image gs-fade-right"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuz1WJmnzQyM_obBJoAwBiu9qmLD7UHNWE9Ca2mJbR6w&s=10" alt="Hydro Mechanical Equipment"></div>
+                <div class="ds-content gs-fade-left">
+                    <span class="gold-text">03. Hydro Engineering</span>
+                    <h2>Hydro Mechanical Equipment</h2>
+                    <p>Delivering critical hydro mechanical infrastructure for major dam and water projects. Our expertise covers the complete fabrication, assembly, and erection of massive gates, spillways, and heavy water-control structures built to withstand immense hydraulic forces.</p>
+                    <ul class="ds-list">
+                        <li><i class="fas fa-check-circle"></i> Radial & Sluice Gates</li>
+                        <li><i class="fas fa-check-circle"></i> Spillway Infrastructure</li>
+                        <li><i class="fas fa-check-circle"></i> Heavy Penstocks</li>
+                        <li><i class="fas fa-check-circle"></i> Dam Superstructures</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="detailed-service-row">
+            <div class="container" style="display: flex; gap: 60px; align-items: center; flex-direction: row-reverse; flex-wrap: wrap;">
+                <div class="ds-image gs-fade-left"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkIwONRqkoMZ25xVZkKP572nq70QTBoB3rdJ6G7EnIWQ&s=10" alt="Railway Wagon Manufacturing"></div>
+                <div class="ds-content gs-fade-right">
+                    <span class="gold-text">04. Railway Infrastructure</span>
+                    <h2>Railway Wagon Manufacturing</h2>
+                    <p>A flagship capability of S.M.R. Engineering. We provide end-to-end manufacturing and sub-assembly for the Indian railway sector, supported by our advanced in-house tool room and surface treatment facilities.</p>
+                    <ul class="ds-list">
+                        <li><i class="fas fa-check-circle"></i> BOXNHL & BCNHL Wagons</li>
+                        <li><i class="fas fa-check-circle"></i> BOBRN & BLC A&B</li>
+                        <li><i class="fas fa-check-circle"></i> Complete Sub Assembly</li>
+                        <li><i class="fas fa-check-circle"></i> Air Brake Arrangement</li>
+                        <li><i class="fas fa-check-circle"></i> Shot Blasting & Painting</li>
+                        <li><i class="fas fa-check-circle"></i> Precision Fixtures & Jigs</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5 -->
+        <div class="detailed-service-row">
+            <div class="container" style="display: flex; gap: 60px; align-items: center; flex-wrap: wrap;">
+                <div class="ds-image gs-fade-right"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR80ucLNWY46d6EKcm6w8COcvX-U4IuLCSHzz-DTocojg&s=10" alt="Industrial Piping & Fire Fighting"></div>
+                <div class="ds-content gs-fade-left">
+                    <span class="gold-text">05. Fluid & Safety Systems</span>
+                    <h2>Industrial Piping & Fire Fighting</h2>
+                    <p>We execute complex Pipeline Fabrication and installation for Oil & Gas refineries and heavy pump houses. Paired with our expertise in Industrial Fire Protection systems, we ensure safe, fully commissioned pipeline networks for hazardous environments.</p>
+                    <ul class="ds-list">
+                        <li><i class="fas fa-check-circle"></i> Oil & Gas Pipelines</li>
+                        <li><i class="fas fa-check-circle"></i> Refinery Pump Houses</li>
+                        <li><i class="fas fa-check-circle"></i> Industrial Fire Protection</li>
+                        <li><i class="fas fa-check-circle"></i> Testing & Commissioning</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6 -->
+        <div class="detailed-service-row">
+            <div class="container" style="display: flex; gap: 60px; align-items: center; flex-direction: row-reverse; flex-wrap: wrap;">
+                <div class="ds-image gs-fade-left"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrZoz5i1y0u1902vMKqgZDrN8o70KUANIiOano8eB9IQ&s=10" alt="Mechanical & Cement Plant Equipment"></div>
+                <div class="ds-content gs-fade-right">
+                    <span class="gold-text">06. Heavy Machinery</span>
+                    <h2>Mechanical & Cement Plant Equipment</h2>
+                    <p>Manufacturing heavy mechanical equipment, industrial machinery, and robust structural components. We also specialize in Cement Plant infrastructure including comprehensive material handling systems.</p>
+                    <ul class="ds-list">
+                        <li><i class="fas fa-check-circle"></i> Storage & Mix Bed Plants</li>
+                        <li><i class="fas fa-check-circle"></i> Loading Plants</li>
+                        <li><i class="fas fa-check-circle"></i> High-capacity Conveyors</li>
+                        <li><i class="fas fa-check-circle"></i> Bucket Elevators & Feeders</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DETAILS MODAL -->
+    <div class="modal-overlay" id="serviceModal">
+        <div class="modal-content">
+            <i class="fas fa-times close-btn" id="closeModal"></i>
+            <div class="modal-header">
+                <i id="modalIcon" class="fas fa-cog"></i>
+                <h2 id="modalTitle">Service Title</h2>
+            </div>
+            <div class="modal-body">
+                <p class="short-desc" id="modalShort">Short Description</p>
+                <div id="modalDetailedText"></div>
+                <div class="modal-tags" id="modalTags">
+                    <!-- Javascript will inject tags here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-col brand-col">
+                <a href="index.html" class="logo footer-logo-wrapper">
+                    <h2 style="color: var(--gold); font-size: 1.8rem; margin: 0;">S.M. Engineering Co.</h2>
+                </a>
+                <p>S.M. Engineering Co. delivers world-class corporate infrastructure with a commitment to quality, safety, and sustainable engineering practices across India.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="about.html">About Company</a></li>
+                    <li><a href="projects.html">Our Projects</a></li>
+                    <li><a href="serviceslanding.html">Our Services</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Us</h4>
+                <ul class="contact-info">
+                    <li><i class="fas fa-user-tie"></i> Mr. Kalpnath (Managing Director)<br>Avinash R. Marathe (Mechanical Engineer)</li>
+                    <li><i class="fas fa-map-marker-alt"></i> A-16 Sai Darshan Society, B/h. Air Force Station, Makarpura, Vadodara.</li>
+                    <li><i class="fas fa-phone-alt"></i> M-9414930380 (Raj) <br> M-8732912572 (Vadodara) <br> M-09979109128</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container text-center">
+                <p>&copy; 2026 S.M.R Engineering Co. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+    <script>
+        const servicesData = [
+            {
+                id: "heavy-fabrication",
+                title: "Heavy Fabrication",
+                icon: "fa-industry",
+                short: "Executing large-scale structural fabrication with absolute dimensional accuracy for industrial plants and infrastructure frameworks.",
+                details: "<p>We provide quality and timely committed services to fulfill the requirements of today's infrastructure development. Our heavy fabrication includes complete structural work, shot/sand blasting, and painting. We are an approved class 'A' contractor functioning with strict quality commitments.</p>",
+                tags: ["Class 'A' Contractor", "Structural Fabrication", "Shot/Sand Blasting", "Painting Works"]
+            },
+            {
+                id: "hydro-mechanical",
+                title: "Hydro Mechanical",
+                icon: "fa-water",
+                short: "Engineering robust gates, spillways, and penstocks capable of withstanding extreme hydraulic pressures for dam projects.",
+                details: "<p>We manufacture, erect, and commission complete Hydro-Mechanical Equipments within stipulated times. Our major project executions include functioning with Alstom Vadodara, V.A.Tech Ltd Faridabad, G.T.V Bhopal, J.P. Industries Rewa, and Arun Excello Chennai.</p>",
+                tags: ["Gates & Spillways", "Alstom Vadodara", "V.A.Tech Ltd", "J.P. Industries"]
+            },
+            {
+                id: "pressure-vessels",
+                title: "Pressure Vessels",
+                icon: "fa-database",
+                short: "ASME standard fabrication of high-capacity pressure vessels ensuring maximum safety for the oil, gas, and chemical sectors.",
+                details: "<p>We expertly handle the heavy manufacturing of pressure vessels tailored for core industrial sectors. Notable project executions include large-scale vessel manufacturing for Cimmco Birla Ltd. located in Bharatpur, Rajasthan.</p>",
+                tags: ["Cimmco Birla Ltd", "High Capacity", "Oil & Gas Sector"]
+            },
+            {
+                id: "heat-exchangers",
+                title: "Heat Exchangers",
+                icon: "fa-temperature-high",
+                short: "Custom manufacturing of shell and tube heat exchangers designed for optimal thermal efficiency in refinery applications.",
+                details: "<p>Our expertise heavily involves the manufacturing of Heat Exchangers. We utilize highly qualified welders for both M.S. and S.S. welding. Major completions include the 72 Ton Heat Exchanger manufactured for the Haldia Refinery, alongside projects for Cimmco Birla Ltd.</p>",
+                tags: ["72 Ton Exchanger", "Haldia Refinery", "M.S. & S.S. Welding"]
+            },
+            {
+                id: "railway-wagon",
+                title: "Railway Wagon Mfg.",
+                icon: "fa-train",
+                short: "Complete assembly and manufacturing of specialized railway freight wagons including BOXNHL, BCNHL, and BOBRN models.",
+                details: "<p>We execute complete sub-assembly, body side/end assembly, boxing of wagons, and air brake arrangement fitting. We develop various types of wagons including Open (BOXNHL), Flat (BLC A&B Car), Covered (BCNHL), Hopper (BOBRN), and BTPN Wagons. Key railway clients include Modern Industries (Sahibabad), Cimmco Birla Ltd., and Jindal Rail Infrastructure Ltd (Karjan).</p>",
+                tags: ["BOXNHL / BCNHL", "BOBRN / BTPN", "Air Brake Fitting", "Modern Industries"]
+            },
+            {
+                id: "industrial-piping",
+                title: "Industrial Piping",
+                icon: "fa-network-wired",
+                short: "Complex pipeline networks and pump house installations engineered for seamless fluid transport in demanding environments.",
+                details: "<p>We specialize in the meticulous manufacturing, erection, and commissioning of comprehensive pipe line and pump house projects. We have successfully executed major pipe line and pump house works at the Bharatpur Depot.</p>",
+                tags: ["Pump House Installation", "Bharatpur Depot", "Fluid Transport"]
+            },
+            {
+                id: "fire-fighting",
+                title: "Fire Fighting Systems",
+                icon: "fa-fire-extinguisher",
+                short: "Turnkey industrial fire protection networks, from pipeline installation to full system commissioning and testing.",
+                details: "<p>S.M. Engineering provides complete manufacturing, erection, and commissioning of turnkey fire fighting projects. A premier showcase of this capability is the completed fire fighting system for the Indian Oil Corporation Limited in Sangrur.</p>",
+                tags: ["Indian Oil Corporation", "Sangrur Project", "Turnkey Commissioning"]
+            },
+            {
+                id: "mechanical-equipment",
+                title: "Mechanical Equipment",
+                icon: "fa-cogs",
+                short: "Custom fabrication and assembly of heavy mechanical machinery and critical structural components for core sectors.",
+                details: "<p>We manufacture a wide array of development tool room equipments such as fixtures, jigs, drilling jigs, marking templates, and checking templates. Additionally, we manage the manufacturing and erection of industrial Skids, notably executing skid projects at the Mathura Refinery.</p>",
+                tags: ["Tool Room Equipments", "Fixtures & Jigs", "Mathura Refinery Skid"]
+            },
+            {
+                id: "conveyor-systems",
+                title: "Conveyor Systems",
+                icon: "fa-truck-loading",
+                short: "Designing high-capacity material handling and conveyor solutions ensuring uninterrupted operational flow.",
+                details: "<p>We design and construct heavy Cement Plant related equipments including Mix Bed Plants, Belt Conveyor Systems, Storage & Loading Plants, and Wagon unloading Pneumatic tube Systems. Our mechanical transport solutions feature Apron Feeders, Deep Pan Conveyors, Screw Conveyors, and Bucket Elevators.</p>",
+                tags: ["Mix Bed Plants", "Apron Feeders", "Pneumatic Tube Systems", "Bucket Elevators"]
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. Lenis Smooth Scroll Setup
+            const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+            function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+            requestAnimationFrame(raf);
+
+            // 2. Preloader Animation
+            // ===== Premium Preloader =====
+const tlPreloader = gsap.timeline({
+    onComplete: () => {
+        document.querySelector(".preloader").style.display = "none";
+    }
+});
+
+tlPreloader
+.fromTo(".preloader-logo",
+{
+    opacity:0,
+    y:20
+},
+{
+    opacity:1,
+    y:0,
+    duration:0.8,
+    ease:"power3.out"
+})
+
+.fromTo(".preloader-text",
+{
+    opacity:0,
+    y:20
+},
+{
+    opacity:1,
+    y:0,
+    duration:0.8,
+    stagger:0.2,
+    ease:"power3.out"
+},
+"-=0.3")
+
+.to(".loading-bar-container",
+{
+    opacity:1,
+    duration:0.3
+})
+
+.to(".loading-progress",
+{
+    width:"100%",
+    duration:1.2,
+    ease:"power2.inOut"
+})
+
+.to(".preloader",
+{
+    yPercent:-100,
+    duration:0.8,
+    ease:"power4.inOut",
+    delay:0.2
+});
+
+            // 4. Render 9-Grid dynamically
+            const gridContainer = document.getElementById('servicesGrid');
+            servicesData.forEach((service, index) => {
+                const card = document.createElement('div');
+                card.className = 'glass-card gs-3d-card gs-fade-up';
+                card.dataset.delay = (index * 0.1).toString();
+                
+                card.innerHTML = `
+                    <i class="fas ${service.icon} glass-icon"></i>
+                    <h3>${service.title}</h3>
+                    <p>${service.short}</p>
+                    <span class="glass-btn">Read More <i class="fas fa-arrow-right"></i></span>
+                `;
+                
+                card.addEventListener('click', () => openModal(service));
+                
+                card.addEventListener('mousemove', e => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = ((y - centerY) / centerY) * -10;
+                    const rotateY = ((x - centerX) / centerX) * 10;
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+                });
+                
+                card.addEventListener('mouseenter', () => cursor.style.transform = 'translate(-50%, -50%) scale(2)');
+                card.addEventListener('mouseleave', () => cursor.style.transform = 'translate(-50%, -50%) scale(1)');
+
+                gridContainer.appendChild(card);
+            });
+
+            // 5. GSAP ScrollReveal Animations
+            gsap.registerPlugin(ScrollTrigger);
+            const fadeUpElements = document.querySelectorAll('.gs-fade-up');
+            fadeUpElements.forEach(el => {
+                gsap.from(el, {
+                    scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none reverse" },
+                    y: 50, opacity: 0, duration: 0.8, delay: el.dataset.delay || 0, ease: "power3.out"
+                });
+            });
+
+            const fadeRightElements = document.querySelectorAll('.gs-fade-right');
+            fadeRightElements.forEach(el => {
+                gsap.from(el, {
+                    scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none reverse" },
+                    x: -50, opacity: 0, duration: 0.8, ease: "power3.out"
+                });
+            });
+
+            const fadeLeftElements = document.querySelectorAll('.gs-fade-left');
+            fadeLeftElements.forEach(el => {
+                gsap.from(el, {
+                    scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none reverse" },
+                    x: 50, opacity: 0, duration: 0.8, ease: "power3.out"
+                });
+            });
+
+            // 6. Particles Setup
+            if(document.getElementById('particles-js')) {
+                particlesJS('particles-js', {
+                    "particles": {
+                        "number": { "value": 40, "density": { "enable": true, "value_area": 800 } },
+                        "color": { "value": "#d4af37" },
+                        "shape": { "type": "circle" },
+                        "opacity": { "value": 0.5, "random": true },
+                        "size": { "value": 3, "random": true },
+                        "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.1, "width": 1 },
+                        "move": { "enable": true, "speed": 1, "direction": "none", "random": true, "out_mode": "out" }
+                    },
+                    "interactivity": {
+                        "detect_on": "canvas",
+                        "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } },
+                        "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 0.5 } } }
+                    },
+                    "retina_detect": true
+                });
+            }
+
+            // 7. Modal Logic Variables and Functions
+            const modal = document.getElementById('serviceModal');
+            const closeModalBtn = document.getElementById('closeModal');
+            
+            const modalIcon = document.getElementById('modalIcon');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalShort = document.getElementById('modalShort');
+            const modalDetailedText = document.getElementById('modalDetailedText');
+            const modalTags = document.getElementById('modalTags');
+
+            function openModal(service) {
+                modalIcon.className = `fas ${service.icon}`;
+                modalTitle.textContent = service.title;
+                modalShort.textContent = service.short;
+                modalDetailedText.innerHTML = service.details;
+                
+                modalTags.innerHTML = '';
+                service.tags.forEach(tag => {
+                    const span = document.createElement('span');
+                    span.textContent = tag;
+                    modalTags.appendChild(span);
+                });
+
+                modal.classList.add('active');
+                lenis.stop();
+            }
+
+            function closeModalFunc() {
+                modal.classList.remove('active');
+                lenis.start();
+            }
+
+            closeModalBtn.addEventListener('click', closeModalFunc);
+            
+            modal.addEventListener('click', (e) => {
+                if(e.target === modal) closeModalFunc();
+            });
+            
+            document.addEventListener('keydown', (e) => {
+                if(e.key === 'Escape' && modal.classList.contains('active')) closeModalFunc();
+            });
+
+            document.querySelectorAll('a, button, .close-btn, .detailed-service-row').forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.style.transform = 'translate(-50%, -50%) scale(2)');
+                el.addEventListener('mouseleave', () => cursor.style.transform = 'translate(-50%, -50%) scale(1)');
+            });
+
+        });
+    </script>
+</body>
+</html>
